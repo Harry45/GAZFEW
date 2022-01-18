@@ -16,3 +16,5 @@ keys_1 = ["!ra", "!dec", "!nsa_id", "!Z"]
 keys_2 = ["!ra", "!dec", "!nsa_id", "!redshift"]
 consistent_keys = ['ra', 'dec', 'nsa_id', 'redshift']
 colnames = ['tag', 'user_id', 'subject_id', 'image_url', 'iauname', 'exists'] + consistent_keys
+
+# We will also work with spirals, rings and ellipticals.
