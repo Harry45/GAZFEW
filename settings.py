@@ -18,3 +18,4 @@ consistent_keys = ['ra', 'dec', 'nsa_id', 'redshift']
 colnames = ['tag', 'user_id', 'subject_id', 'image_url', 'iauname', 'exists'] + consistent_keys
 
 # We will also work with spirals, rings and ellipticals.
+# We will use ML techniques.
