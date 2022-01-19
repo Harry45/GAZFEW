@@ -52,7 +52,7 @@ def find_exist_img(tag_file: str, save: bool = False, **kwargs) -> pd.DataFrame:
 
     if save:
         filename = kwargs.pop('filename')
-        hp.save_pd_csv(tags_updated, st.data_dir, filename)
+        hp.save_pd_csv(tags_updated, st.data_dir + '/tags', filename)
 
     return tags_updated
 
@@ -88,7 +88,7 @@ def process_meta(df: pd.DataFrame, save: bool = False, **kwargs) -> pd.DataFrame
 
     if save:
         filename = kwargs.pop('filename')
-        hp.save_pd_csv(df_cat, st.data_dir, filename)
+        hp.save_pd_csv(df_cat, st.data_dir + '/tags', filename)
 
     return df_cat
 
@@ -117,6 +117,6 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
         dictionary[item] = df[df['tag'] == item]
 
         if save:
-            hp.save_pd_csv(dictionary[item], st.data_dir, 'tags_images_' + item)
+            hp.save_pd_csv(dictionary[item], st.data_dir + '/tags', 'tags_images_' + item)
 
     return dictionary
