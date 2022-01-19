@@ -216,6 +216,6 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
 
         print(f'{counts} images saved to {mainfolder}')
 
-    # save the dataframe to the folder tags/
-    if save:
-        hp.save_pd_csv(df, st.data_dir + '/tags', 'tags_images_subset_' + item)
+        # save the dataframe to the folder tags/
+        if save:
+            hp.save_pd_csv(df, st.data_dir + '/tags', 'tags_images_subset_' + item)
