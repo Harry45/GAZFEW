@@ -120,3 +120,16 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
             hp.save_pd_csv(dictionary[item], st.data_dir + '/tags', 'tags_images_' + item)
 
     return dictionary
+
+
+# def search_save_database(tag_name: str, save: bool = False) -> None:
+#     """Given a tag, we will first load the csv file containing the iauname of the object
+#     and store them in a folder called category/tag_name/.
+
+#     Args:
+#         tag (str): The tag in string format, for example, elliptical, spiral, ring
+#         save (bool, optional): If True, the images will be stored. Defaults to False.
+#     """
+
+#     # first load the csv file with the details of each object
+#     df = hp.load_csv(st.data_dir + 'tags', 'tags_images_' + tag_name)

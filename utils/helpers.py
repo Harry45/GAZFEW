@@ -4,6 +4,7 @@
 # Description: This file contains some helper functions.
 # Project: One/Few-Shot Learning for Galaxy Zoo
 
+from logging import raiseExceptions
 import os
 from typing import NewType
 import numpy as np
@@ -104,10 +105,14 @@ def load_csv(folder_name: str, file_name: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: the loaded csv file
     """
-    # load the csv file
-    df = pd.read_csv(folder_name + '/' + file_name + '.csv')
+    path = folder_name + '/' + file_name + '.csv'
 
-    return df
+    if not os.path.isfile(path):
+        raise FileNotFoundError('File not found: ' + path)
+
+    else:
+        df = pd.read_csv()
+        return df
 
 
 def save_csv(array: np.ndarray, folder_name: str, file_name: str) -> None:
