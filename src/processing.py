@@ -97,11 +97,14 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
     """Given a dataframe which contains the details of the different images and a list
     of the different tags, we will create subsets of the main dataframe and choose to store them.
     There are more than 3000 tags but here we will focus on the most popular ones, for example,
+
     - spiral
     - elliptical
     - ring
     - bar
+
     which are common in galaxy morphological classifications.
+
     Args:
         df (pd.DataFrame): The main dataframe with the details of all images.
         tag_names (list): A list of tag names.
@@ -122,14 +125,31 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
     return dictionary
 
 
-# def search_save_database(tag_name: str, save: bool = False) -> None:
-#     """Given a tag, we will first load the csv file containing the iauname of the object
-#     and store them in a folder called category/tag_name/.
+def search_save_database(tag_name: str) -> None:
+    """Search the database for the images which have the tag name and save them to a folder.
 
-#     Args:
-#         tag (str): The tag in string format, for example, elliptical, spiral, ring
-#         save (bool, optional): If True, the images will be stored. Defaults to False.
-#     """
+    Args:
+        tag_name (str): The name of the tag.
+    """
 
-#     # first load the csv file with the details of each object
-#     df = hp.load_csv(st.data_dir + 'tags', 'tags_images_' + tag_name)
+    # load the csv file from the tags/ folder
+    df = hp.load_csv(st.data_dir + '/' + 'tags', 'tags_images_' + tag_name)
+
+    # number of objects
+    nobjects = df.shape[0]
+
+    # create a folder where we want to store the images
+    mainfolder = st.data_dir + '/' + 'categories' + '/' + tag_name
+
+    if not os.path.exists(mainfolder):
+        os.makedirs(mainfolder)
+
+    # fetch the data from Mike's directory
+    for i in range(nobjects):
+        folder, fname = ui.object_name(df.iauname.iloc[i])
+
+        decals_file = st.decals + '/' + folder + '/' + fname
+
+        if os.path.isfile(decals_file):
+            cmd = f'cp {decals_file} {mainfolder}'+'/'
+            os.system(cmd)
