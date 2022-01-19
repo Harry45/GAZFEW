@@ -117,7 +117,12 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
 
     dictionary = {}
     for item in tag_names:
-        dictionary[item] = df[df['tag'] == item]
+
+        # select rows with the tag
+        df_selected = df[df['tag'] == item]
+
+        # there are also duplicate rows in the file - we keep the first one
+        dictionary[item] = df_selected.drop_duplicates(subset=['iauname'], keep='first')
 
         if save:
             hp.save_pd_csv(dictionary[item], st.data_dir + '/tags', 'tags_images_' + item)
