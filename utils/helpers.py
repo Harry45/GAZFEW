@@ -111,7 +111,7 @@ def load_csv(folder_name: str, file_name: str) -> pd.DataFrame:
         raise FileNotFoundError('File not found: ' + path)
 
     else:
-        df = pd.read_csv()
+        df = pd.read_csv(path)
         return df
 
 
