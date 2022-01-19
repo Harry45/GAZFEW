@@ -7,6 +7,7 @@
 import os
 import json
 import pandas as pd
+import numpy as np
 
 # our own functions and scripts
 import utils.imaging as ui
