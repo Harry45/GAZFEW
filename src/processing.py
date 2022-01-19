@@ -6,6 +6,7 @@
 
 import os
 import json
+import shutil
 import pandas as pd
 import numpy as np
 
@@ -198,7 +199,12 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
         # create a folder where we want to store the images
         mainfolder = st.data_dir + '/' + 'categories' + '/' + 'subset_' + item + '/'
 
-        if not os.path.exists(mainfolder):
+        if os.path.exists(mainfolder):
+
+            # delete the folder first if it exists
+            shutil.rmtree(mainfolder)
+
+            # then create a new one
             os.makedirs(mainfolder)
 
         counts = 0
