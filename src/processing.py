@@ -153,3 +153,6 @@ def search_save_database(tag_name: str) -> None:
         if os.path.isfile(decals_file):
             cmd = f'cp {decals_file} {mainfolder}'+'/'
             os.system(cmd)
+
+        else:
+            print(decals_file)
