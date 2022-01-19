@@ -102,17 +102,15 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
     - ring
     - bar
     which are common in galaxy morphological classifications.
-
     Args:
         df (pd.DataFrame): The main dataframe with the details of all images.
         tag_names (list): A list of tag names.
         save (bool, optional): Choice of saving the outputs to a folder. See settings file. Defaults to False.
-
     Returns:
         dict: A dictionary consisting of the different dataframes.
     """
     assert len(tag_names) >= 1, 'At least one tag should be provided in a list, for example, ["spiral"].'
-    assert 'tag' in list(df.colnames), 'The dataframe should contain a column with name "tag".'
+    assert 'tag' in list(df.columns), 'The dataframe should contain a column with name "tag".'
 
     dictionary = {}
     for item in tag_names:
