@@ -202,7 +202,7 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
 
         counts = 0
         # fetch the data from Mike's directory
-        for i in range(10):
+        for i in range(n_examples):
 
             folder, fname = ui.object_name(df.iauname.iloc[i])
 
