@@ -144,7 +144,7 @@ def search_save_database(tag_name: str) -> None:
     nobjects = df.shape[0]
 
     # create a folder where we want to store the images
-    mainfolder = st.data_dir + '/' + 'categories' + '/' + tag_name
+    mainfolder = st.data_dir + '/' + 'categories' + '/' + tag_name + '/'
 
     if not os.path.exists(mainfolder):
         os.makedirs(mainfolder)
@@ -157,7 +157,7 @@ def search_save_database(tag_name: str) -> None:
         decals_file = st.decals + '/' + folder + '/' + fname
 
         if os.path.isfile(decals_file):
-            cmd = f'cp {decals_file} {mainfolder}'+'/'
+            cmd = f'cp {decals_file} {mainfolder}'
             os.system(cmd)
             counts += 1
 
@@ -165,3 +165,25 @@ def search_save_database(tag_name: str) -> None:
             print(decals_file)
 
     print(f'{counts} images saved to {mainfolder}')
+
+
+def generate_random_set(tag_names: list, n_examples: int) -> None:
+    """Given a list of tags, we will generate a random set of n examples and store the images in
+    categories/ and a csv file will also be generated in the tags/ folder. Note that, we are assuming
+    that the images are already in the categories/ folder. The csv files per tag are also assumed to be in
+    the tags/ folder. Note that
+
+    - there are not repetitions,
+    - the number of examples should be less or equal to the minimum number of images per tag.
+
+    Args:
+        tag_names (list): a list of the different tags, for example, ['spiral', 'ring', 'elliptical'].
+        n_examples (int): the number of examples we want to use.
+    """
+
+    # find the number of images per tag
+    nobjects = [hp.load_csv(st.data_dir + '/tags', 'tags_images_' + item).shape[0] for item in tag_names]
+
+    print(nobjects)
+
+    assert n_examples <= min(nobjects), 'The number of examples should be less than the number of objects.'
