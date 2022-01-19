@@ -203,9 +203,9 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
 
         counts = 0
         # fetch the data from Mike's directory
-        for i in range(n_examples):
+        for j in range(n_examples):
 
-            folder, fname = ui.object_name(df.iauname.iloc[i])
+            folder, fname = ui.object_name(df.iauname.iloc[j])
 
             decals_file = st.decals + '/' + folder + '/' + fname
 
