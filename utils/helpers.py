@@ -19,6 +19,7 @@ import pandas as pd
 
 TorchTensor = NewType('TorchTensor', classmethod)
 
+
 def tensor_to_dict(tensor: TorchTensor, keys: list) -> dict:
     """Convert a tensor to a dictionary given a list of keys
 
@@ -43,7 +44,7 @@ def dict_to_tensor(dictionary: dict, keys: list) -> TorchTensor:
         torch.tensor: the pytorch tensor
     """
 
-    return None # torch.tensor([dictionary[key] for key in keys])
+    return None  # torch.tensor([dictionary[key] for key in keys])
 
 
 def subset_dict(dictionary: dict, keys: list) -> dict:

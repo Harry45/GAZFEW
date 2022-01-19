@@ -120,6 +120,3 @@ def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dic
             hp.save_pd_csv(dictionary[item], st.data_dir, 'tags_images_' + item)
 
     return dictionary
-
-
-def
