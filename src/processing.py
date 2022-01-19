@@ -204,8 +204,8 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
             # delete the folder first if it exists
             shutil.rmtree(mainfolder)
 
-            # then create a new one
-            os.makedirs(mainfolder)
+        # then create a new one
+        os.makedirs(mainfolder)
 
         counts = 0
         # fetch the data from Mike's directory
