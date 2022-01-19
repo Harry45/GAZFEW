@@ -91,3 +91,34 @@ def process_meta(df: pd.DataFrame, save: bool = False, **kwargs) -> pd.DataFrame
         hp.save_pd_csv(df_cat, st.data_dir, filename)
 
     return df_cat
+
+
+def select_df_tags(df: pd.DataFrame, tag_names: list, save: bool = False) -> dict:
+    """Given a dataframe which contains the details of the different images and a list
+    of the different tags, we will create subsets of the main dataframe and choose to store them.
+    There are more than 3000 tags but here we will focus on the most popular ones, for example,
+    - spiral
+    - elliptical
+    - ring
+    - bar
+    which are common in galaxy morphological classifications.
+
+    Args:
+        df (pd.DataFrame): The main dataframe with the details of all images.
+        tag_names (list): A list of tag names.
+        save (bool, optional): Choice of saving the outputs to a folder. See settings file. Defaults to False.
+
+    Returns:
+        dict: A dictionary consisting of the different dataframes.
+    """
+    assert len(tag_names) >= 1, 'At least one tag should be provided in a list, for example, ["spiral"].'
+    assert 'tag' in list(df.colnames), 'The dataframe should contain a column with name "tag".'
+
+    dictionary = {}
+    for item in tag_names:
+        dictionary[item] = df[df['tag'] == item]
+
+        if save:
+            hp.save_pd_csv(dictionary[item], st.data_dir, 'tags_images_' + item)
+
+    return dictionary
