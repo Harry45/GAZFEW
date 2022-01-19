@@ -144,6 +144,7 @@ def search_save_database(tag_name: str) -> None:
     if not os.path.exists(mainfolder):
         os.makedirs(mainfolder)
 
+    counts = 0
     # fetch the data from Mike's directory
     for i in range(nobjects):
         folder, fname = ui.object_name(df.iauname.iloc[i])
@@ -153,6 +154,9 @@ def search_save_database(tag_name: str) -> None:
         if os.path.isfile(decals_file):
             cmd = f'cp {decals_file} {mainfolder}'+'/'
             os.system(cmd)
+            counts += 1
 
         else:
             print(decals_file)
+
+    print(f'{counts} images saved to {mainfolder}')
