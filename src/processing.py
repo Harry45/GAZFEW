@@ -161,13 +161,10 @@ def search_save_database(tag_name: str) -> None:
             os.system(cmd)
             counts += 1
 
-        else:
-            print(decals_file)
-
     print(f'{counts} images saved to {mainfolder}')
 
 
-def generate_random_set(tag_names: list, n_examples: int) -> None:
+def generate_random_set(tag_names: list, n_examples: int, save: bool = False) -> None:
     """Given a list of tags, we will generate a random set of n examples and store the images in
     categories/ and a csv file will also be generated in the tags/ folder. Note that, we are assuming
     that the images are already in the categories/ folder. The csv files per tag are also assumed to be in
@@ -179,11 +176,45 @@ def generate_random_set(tag_names: list, n_examples: int) -> None:
     Args:
         tag_names (list): a list of the different tags, for example, ['spiral', 'ring', 'elliptical'].
         n_examples (int): the number of examples we want to use.
+        save (bool): Choose if we want to save the outputs generated. Defaults to False.
     """
 
     # find the number of images per tag
     nobjects = [hp.load_csv(st.data_dir + '/tags', 'tags_images_' + item).shape[0] for item in tag_names]
 
-    print(nobjects)
+    print(f'The number of examples we have is {nobjects}')
 
     assert n_examples <= min(nobjects), 'The number of examples should be less than the number of objects.'
+
+    for i, item in enumerate(tag_names):
+
+        # generate a set of unique random index numbers
+        idx = np.random.choice(nobjects[i], n_examples, replace=False)
+
+        # load the csv file
+        df = hp.load_csv(st.data_dir + '/tags', 'tags_images_' + item).iloc[idx]
+
+        # create a folder where we want to store the images
+        mainfolder = st.data_dir + '/' + 'categories' + '/' + 'subset_' + item + '/'
+
+        if not os.path.exists(mainfolder):
+            os.makedirs(mainfolder)
+
+        counts = 0
+        # fetch the data from Mike's directory
+        for i in range(10):
+
+            folder, fname = ui.object_name(df.iauname.iloc[i])
+
+            decals_file = st.decals + '/' + folder + '/' + fname
+
+            if os.path.isfile(decals_file):
+                cmd = f'cp {decals_file} {mainfolder}'
+                os.system(cmd)
+                counts += 1
+
+        print(f'{counts} images saved to {mainfolder}')
+
+    # save the dataframe to the folder tags/
+    if save:
+        hp.save_pd_csv(df, st.data_dir + '/tags', 'tags_images_subset_' + item)
