@@ -26,7 +26,8 @@
 decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
 
 # Data from my folder (will also contains the tags that Mike shared)
-data_dir = '/data/phys-zooniverse/phys2286/data'
+# data_dir = '/data/phys-zooniverse/phys2286/data'
+data_dir = '/home/harry/Documents/Oxford/Astrophysics/Projects/Deep-Learning/data'
 
 # column names to keep
 # the tags seem to have been generated from different data sources
@@ -34,3 +35,20 @@ keys_1 = ["!ra", "!dec", "!nsa_id", "!Z"]
 keys_2 = ["!ra", "!dec", "!nsa_id", "!redshift"]
 consistent_keys = ['ra', 'dec', 'nsa_id', 'redshift']
 colnames = ['tag', 'user_id', 'subject_id', 'image_url', 'iauname', 'exists'] + consistent_keys
+
+# ---------------------------------------------------------------------
+# the Deep Learning part
+new_img_size = [3, 224, 224]
+
+# basic statistics of the images. These are fixed, meaning same transformation should be applied to
+# training, validation and test data.
+
+# mean of the whole dataset (this is for 3 channels)
+mean_img = [26.97003201762193, 25.172733883647798, 24.687282796368816]
+
+# standard deviation of the whole dataset
+std_img = [27.974221728738513, 25.714420641820155, 24.653711141402653]
+
+# training and validation paths
+train_path = data_dir + '/ml/train_images/'
+val_path = data_dir + '/ml/validate_images/'

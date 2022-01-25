@@ -9,6 +9,7 @@ import json
 import shutil
 import pandas as pd
 import numpy as np
+import sklearn.model_selection as sm
 
 # our own functions and scripts
 import utils.imaging as ui
@@ -225,3 +226,97 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
         # save the dataframe to the folder tags/
         if save:
             hp.save_pd_csv(df, st.data_dir + '/tags', 'tags_images_subset_' + item)
+
+
+def split_data(tag_names: list, val_size: float = 0.35, save: bool = False) -> dict:
+    """Split the data into training and validation size for assessing the performance of the network.
+
+    Args:
+        tag_names (list): A list of the tag names, for example, elliptical, ring, spiral
+        val_size (float, optional): The size of the validation set, a number between 0 and 1. Defaults to 0.35.
+        save (bool): Choose if we want to save the outputs generated. Defaults to False.
+
+    Returns:
+        dict: A dictionary consisting of the training and validation data.
+    """
+
+    d = {}
+
+    for item in tag_names:
+
+        # load the csv file
+        tag_file = hp.load_csv(st.data_dir + '/tags', 'tags_images_subset_' + item)
+
+        # split the data into train and validation
+        train, validate = sm.train_test_split(tag_file, test_size=val_size)
+
+        # reset the index (not required, but just in case)
+        train.reset_index(drop=True, inplace=True)
+        validate.reset_index(drop=True, inplace=True)
+
+        # store the dataframes in the dictionary
+        d[item] = {'train': train, 'validate': validate}
+
+        if save:
+            hp.save_pd_csv(d[item]['train'], st.data_dir + '/ml/train_tags', item)
+            hp.save_pd_csv(d[item]['validate'], st.data_dir + '/ml/validate_tags', item)
+
+    return d
+
+
+def images_train_validate(tag_names: list) -> None:
+    """Read the csv file for a particular tag and copy the images in their respective folders
+
+    Args:
+        tag_names (list): A list of the tag names, for example, elliptical, ring, spiral
+        save (bool, optional): Choose if we want to save the outputs generated. Defaults to False.
+    """
+
+    for item in tag_names:
+
+        # read the training and validation file for a particular tag
+        training = hp.load_csv(st.data_dir + '/ml/train_tags', item)
+        validation = hp.load_csv(st.data_dir + '/ml/validate_tags', item)
+
+        # number of items in training and validation
+        ntrain = training.shape[0]
+        nvalidate = validation.shape[0]
+
+        # create a folder where we want to store the images
+        train_folder = st.data_dir + '/' + 'ml' + '/' + 'train_images' + '/' + item + '/'
+        val_folder = st.data_dir + '/' + 'ml' + '/' + 'validate_images' + '/' + item + '/'
+
+        # create the different folders if they do not exist (remove them if they exist already)
+        if os.path.exists(train_folder):
+
+            # delete the folder first if it exists
+            shutil.rmtree(train_folder)
+
+        # then create a new one
+        os.makedirs(train_folder)
+
+        if os.path.exists(val_folder):
+
+            # delete the folder first if it exists
+            shutil.rmtree(val_folder)
+
+        # then create a new one
+        os.makedirs(val_folder)
+
+        # copy the data from categories/subset_item to categories/train/item
+        for j in range(ntrain):
+
+            file = st.data_dir + '/' + 'categories' + '/' + 'subset_' + item + '/' + training.iauname.iloc[j] + '.png'
+
+            if os.path.isfile(file):
+                cmd = f'cp {file} {train_folder}'
+                os.system(cmd)
+
+        # copy the data from categories/subset_item to categories/validate/item
+        for j in range(nvalidate):
+
+            file = st.data_dir + '/' + 'categories' + '/' + 'subset_' + item + '/' + validation.iauname.iloc[j] + '.png'
+
+            if os.path.isfile(file):
+                cmd = f'cp {file} {val_folder}'
+                os.system(cmd)
