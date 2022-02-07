@@ -18,7 +18,7 @@
 #              | examples | size   | location
 # ---------------------------------------------------------------------
 # Spiral       | 6830     | 2.1 GB | $DATA/data/categories/spiral
-# Ring         | 273      | 0.8 GB | $DATA/data/categories/ring
+# Ring         | 2735     | 0.8 GB | $DATA/data/categories/ring
 # Elliptical   | 943      | 0.3 GB | $DATA/data/categories/elliptical
 # ---------------------------------------------------------------------
 
@@ -44,10 +44,10 @@ new_img_size = [3, 224, 224]
 # training, validation and test data.
 
 # mean of the whole dataset (this is for 3 channels)
-mean_img = [26.97003201762193, 25.172733883647798, 24.687282796368816]
+mean_img = [0.485, 0.456, 0.406]  # [26.97003201762193, 25.172733883647798, 24.687282796368816]
 
 # standard deviation of the whole dataset
-std_img = [27.974221728738513, 25.714420641820155, 24.653711141402653]
+std_img = [0.229, 0.224, 0.225]  # [27.974221728738513, 25.714420641820155, 24.653711141402653]
 
 # training and validation paths
 train_path = data_dir + '/ml/train_images/'

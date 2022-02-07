@@ -9,8 +9,6 @@ import glob
 import time
 
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import numpy as np
 from torchvision import transforms
 from torch.utils.data import IterableDataset
@@ -37,7 +35,9 @@ class DataSet(IterableDataset):
         self.normalise = normalise
 
         # this is the default transform
-        trans = [transforms.ToTensor(), transforms.Resize(st.new_img_size[1:])]
+        # trans = [transforms.ToTensor(), transforms.Resize(st.new_img_size[1:])]
+        trans = [transforms.Grayscale(num_output_channels=1), transforms.ToTensor(),
+                 transforms.Resize(300), transforms.CenterCrop(224)]
 
         # apply normalisation if set in argument
         if self.normalise:
