@@ -26,8 +26,8 @@
 decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
 
 # Data from my folder (will also contains the tags that Mike shared)
-# data_dir = '/data/phys-zooniverse/phys2286/data'
-data_dir = '/home/harry/Documents/Oxford/Astrophysics/Projects/Deep-Learning/data'
+data_dir = '/data/phys-zooniverse/phys2286/data'
+# data_dir = '/home/harry/Documents/Oxford/Astrophysics/Projects/Deep-Learning/data'
 
 # column names to keep
 # the tags seem to have been generated from different data sources
