@@ -43,7 +43,7 @@ def correct_location(csv: str, save: bool = False, **kwargs) -> pd.DataFrame:
 
     if save:
         filename = kwargs.pop('filename')
-        hp.save_pd_csv(df, st.data_dir + '/descriptions', filename)
+        hp.save_parquet(df, st.data_dir + '/descriptions', filename)
 
     return df
 

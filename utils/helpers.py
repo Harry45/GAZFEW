@@ -143,3 +143,18 @@ def save_pd_csv(df: pd.DataFrame, folder_name: str, file_name: str) -> None:
         os.makedirs(folder_name)
 
     df.to_csv(folder_name + '/' + file_name + '.csv', index=False)
+
+
+def save_parquet(df: pd.DataFrame, folder_name: str, file_name: str) -> None:
+    """Save a dataframe to a parquet file
+
+    Args:
+        df(pd.DataFrame): The dataframe to be saved
+        folder_name(str): The name of the folder
+        file_name(str): The name of the file
+    """
+    # create the folder if it does not exist
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
+    df.to_parquet(folder_name + '/' + file_name + '.parquet', index=False)
