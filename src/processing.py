@@ -47,6 +47,44 @@ def correct_location(csv: str, save: bool = False, **kwargs) -> pd.DataFrame:
 
     return df
 
+
+def filtering(df: pd.DataFrame, dictionary: dict, save: bool = False, **kwargs) -> pd.DataFrame:
+    """Given a dictionary of filters, filter the dataframe. For example,
+
+    dictionary = {'has-spiral-arms_yes_fraction' : 0.75, 'has-spiral-arms_yes' : 20}
+
+    means we have at least 20 volunteers, who have voted for spiral arms, and the fraction of those who voted for spiral arms is at least 0.75.
+
+    Note that the keys in the dictionary are the column names in the dataframe.
+
+    Args:
+        df (pd.DataFrame): A pandas dataframe with the metadata
+        dictionary (dict): A dictionary of filters.
+
+    Returns:
+        pd.DataFrame: A pandas dataframe with the filtered data.
+    """
+
+    # number of objects in the dataframe
+    nobjects = df.shape[0]
+
+    # items in the dictionary
+    items = list(dictionary.items())
+
+    # number of items in the dictionary
+    nitems = len(items)
+
+    condition = [True] * nobjects
+
+    for item in items:
+        condition &= df[item[0]] > item[1]
+
+    if save:
+        filename = kwargs.pop('filename')
+        hp.save_parquet(df[condition], st.data_dir + '/descriptions', filename)
+
+    return df[condition]
+
 # The code below was written when we were using the tags to make the selection of the images.
 
 
