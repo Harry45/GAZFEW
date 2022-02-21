@@ -158,3 +158,23 @@ def save_parquet(df: pd.DataFrame, folder_name: str, file_name: str) -> None:
         os.makedirs(folder_name)
 
     df.to_parquet(folder_name + '/' + file_name + '.parquet', index=False)
+
+
+def read_parquet(folder_name: str, file_name: str) -> pd.DataFrame:
+    """Given a folder name and file name, we will load the parquet file.
+
+    Args:
+        folder_name(str): the name of the folder
+        file_name(str): name of the file
+
+    Returns:
+        pd.DataFrame: the loaded csv file
+    """
+    path = folder_name + '/' + file_name + '.parquet'
+
+    if not os.path.isfile(path):
+        raise FileNotFoundError('File not found: ' + path)
+
+    else:
+        df = pd.read_parquet(path, engine='fastparquet')
+        return df
