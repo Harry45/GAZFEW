@@ -25,9 +25,12 @@
 # DECaLS (the data is in Mike's directory on ARC cluster)
 decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
 
+# The Zenodo directory - we will need this for the description of each image (volunteers' votes)
+zenodo = '/data/phys-zooniverse/phys2286/data/zenodo'
+
 # Data from my folder (will also contains the tags that Mike shared)
-data_dir = '/data/phys-zooniverse/phys2286/data'
-# data_dir = '/home/harry/Documents/Oxford/Astrophysics/Projects/Deep-Learning/data'
+# data_dir = '/data/phys-zooniverse/phys2286/data'
+data_dir = '/home/harry/Documents/Oxford/Astrophysics/Projects/Deep-Learning/data'
 
 # column names to keep
 # the tags seem to have been generated from different data sources

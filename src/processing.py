@@ -17,6 +17,39 @@ import utils.helpers as hp
 import settings as st
 
 
+def correct_location(csv: str, save: bool = False, **kwargs) -> pd.DataFrame:
+    """Rename the columns containing the image location to the right one.
+
+    Args:
+        csv (str): the name of the csv file
+        save (bool): save the file if we want to
+
+    Returns:
+        pd.DataFrame: a dataframe consisting of the corrected location.
+    """
+    df = hp.load_csv(st.zenodo, csv)
+
+    # the number of objects
+    nobjects = df.shape[0]
+
+    # The png images are in the folder png/Jxxx/ rather than dr5/Jxxx/
+    locations = [csv.png_loc.values[i][4:] for i in range(nobjects)]
+    df.png_loc = locations
+
+    # check if all files exist
+    imgs_exists = [int(os.path.isfile(st.decals + '/' + locations[i])) for i in range(nobjects)]
+    imgs_exists = pd.DataFrame(imgs_exists, columns=['exists'])
+    df = pd.concat([df, imgs_exists], axis=1)
+
+    if save:
+        filename = kwargs.pop('filename')
+        hp.save_pd_csv(df, st.data_dir + '/descriptions', filename)
+
+    return df
+
+# The code below was written when we were using the tags to make the selection of the images.
+
+
 def find_exist_img(tag_file: str, save: bool = False, **kwargs) -> pd.DataFrame:
     """Find the set of images which exists in the DECaLS DR5 folder, using the csv file containing the tags.
 
