@@ -33,7 +33,7 @@ def correct_location(csv: str, save: bool = False, **kwargs) -> pd.DataFrame:
     nobjects = df.shape[0]
 
     # The png images are in the folder png/Jxxx/ rather than dr5/Jxxx/
-    locations = [csv.png_loc.values[i][4:] for i in range(nobjects)]
+    locations = [df.png_loc.values[i][4:] for i in range(nobjects)]
     df.png_loc = locations
 
     # check if all files exist
