@@ -71,9 +71,6 @@ def filtering(df: pd.DataFrame, dictionary: dict, save: bool = False, **kwargs) 
     # items in the dictionary
     items = list(dictionary.items())
 
-    # number of items in the dictionary
-    nitems = len(items)
-
     condition = [True] * nobjects
 
     for item in items:

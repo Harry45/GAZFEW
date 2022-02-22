@@ -56,7 +56,7 @@ std_img = [0.229, 0.224, 0.225]  # [27.974221728738513, 25.714420641820155, 24.6
 train_path = data_dir + '/ml/train_images/'
 val_path = data_dir + '/ml/validate_images/'
 
-# ----------------------------------------
+# ----------------------------------------------------------------------------------
 condition_spiral = {'has-spiral-arms_yes_fraction': 0.75, 'has-spiral-arms_yes': 20}
 condition_elliptical = {'smooth-or-featured_smooth_fraction': 0.75,
                         'smooth-or-featured_smooth': 20, 'merging_none_fraction': 0.75}
