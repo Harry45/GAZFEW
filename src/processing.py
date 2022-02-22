@@ -75,12 +75,39 @@ def filtering(df: pd.DataFrame, dictionary: dict, save: bool = False, **kwargs) 
 
     for item in items:
         condition &= df[item[0]] > item[1]
+    
+    # apply condition and reset index 
+    df_sub = df[condition]
+    df_sub.reset_index(inplace=True, drop=True)
 
     if save:
         filename = kwargs.pop('filename')
-        hp.save_parquet(df[condition], st.data_dir + '/descriptions', filename)
+        hp.save_parquet(df_sub, st.data_dir + '/descriptions', filename)
 
-    return df[condition]
+    return df_sub
+
+def subset_df(dataframe: pd.DataFrame, nsubjects: int, random: bool=False, save: bool=False, **kwargs):
+    
+    # total number of objects
+    total = dataframe.shape[0]
+    
+    assert nsubjects <= total, 'The number of subjects requested is larger than the available number of objects.'
+    
+    if random:
+        idx = np.random.choice(total, nsubjects, replace=False)
+        
+    else:
+        idx = range(nsubjects)
+    
+    df_sub = dataframe.iloc[idx]
+    df_sub.reset_index(inplace=True, drop=True)
+    
+    if save:
+        filename = kwargs.pop('filename')
+        hp.save_parquet(df_sub, st.data_dir + '/descriptions', filename)
+        
+    return df_sub   
+
 
 # The code below was written when we were using the tags to make the selection of the images.
 
@@ -119,7 +146,7 @@ def find_exist_img(tag_file: str, save: bool = False, **kwargs) -> pd.DataFrame:
 
     # subset (the ones for which we have an image)
     tags_updated = tags_new[tags_new['exists'] == 1]
-    tags_updated.reset_index(inplace=True)
+    tags_updated.reset_index(inplace=True, drop=True)
 
     if save:
         filename = kwargs.pop('filename')

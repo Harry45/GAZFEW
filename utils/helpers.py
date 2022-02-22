@@ -176,5 +176,5 @@ def read_parquet(folder_name: str, file_name: str) -> pd.DataFrame:
         raise FileNotFoundError('File not found: ' + path)
 
     else:
-        df = pd.read_parquet(path, engine='fastparquet')
+        df = pd.read_parquet(path)
         return df
