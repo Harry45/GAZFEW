@@ -76,8 +76,8 @@ def filtering(df: pd.DataFrame, dictionary: dict, save: bool = False, **kwargs) 
 
     for item in items:
         condition &= df[item[0]] > item[1]
-    
-    # apply condition and reset index 
+
+    # apply condition and reset index
     df_sub = df[condition]
     df_sub.reset_index(inplace=True, drop=True)
 
@@ -87,7 +87,8 @@ def filtering(df: pd.DataFrame, dictionary: dict, save: bool = False, **kwargs) 
 
     return df_sub
 
-def subset_df(dataframe: pd.DataFrame, nsubjects: int, random: bool=False, save: bool=False, **kwargs) -> pd.DataFrame:
+
+def subset_df(dataframe: pd.DataFrame, nsubjects: int, random: bool = False, save: bool = False, **kwargs) -> pd.DataFrame:
     """Generate a subset of objects, for example, 2000 out of 10 000 spirals.
 
     Args:
@@ -95,33 +96,33 @@ def subset_df(dataframe: pd.DataFrame, nsubjects: int, random: bool=False, save:
         nsubjects (int): The number of subjects we want to pick.
         random (bool): We can set this to True, if we want to pick the subjects randomly.
         save (bool): Option to save the outputs. Defaults to False.
-    
+
     Returns:
-        pd.DataFrame: A pandas dataframe consisting of a subset of images. 
+        pd.DataFrame: A pandas dataframe consisting of a subset of images.
     """
-   
+
     # total number of objects
     total = dataframe.shape[0]
-    
+
     assert nsubjects <= total, 'The number of subjects requested is larger than the available number of objects.'
-    
+
     if random:
         idx = np.random.choice(total, nsubjects, replace=False)
-        
+
     else:
         idx = range(nsubjects)
-    
+
     df_sub = dataframe.iloc[idx]
     df_sub.reset_index(inplace=True, drop=True)
-    
+
     if save:
         filename = kwargs.pop('filename')
         hp.save_parquet(df_sub, st.data_dir + '/descriptions', filename)
-        
-    return df_sub   
+
+    return df_sub
 
 
-def copy_images(df:pd.DataFrame, foldername: str) -> None:
+def copy_images(df: pd.DataFrame, foldername: str) -> None:
     """Copy images from Mike's folder to our working directory.
 
     Args:
@@ -143,14 +144,15 @@ def copy_images(df:pd.DataFrame, foldername: str) -> None:
     for i in range(nobjects):
 
         decals_file = st.decals + '/' + df['png_loc'].iloc[i]
-        
+
         if os.path.isfile(decals_file):
             cmd = f'cp {decals_file} {mainfolder}'
             os.system(cmd)
             counts += 1
 
     print(f'{counts} images saved to {mainfolder}')
-    
+
+
 def split_data(tag_names: list, val_size: float = 0.35, save: bool = False) -> dict:
     """Split the data into training and validation size for assessing the performance of the network.
 
@@ -185,6 +187,7 @@ def split_data(tag_names: list, val_size: float = 0.35, save: bool = False) -> d
             hp.save_pd_csv(d[item]['validate'], st.data_dir + '/' + 'ml/validate_tags', item)
 
     return d
+
 
 def images_train_validate(tag_names: list) -> None:
     """Read the csv file for a particular tag and copy the images in their respective folders
@@ -242,7 +245,7 @@ def images_train_validate(tag_names: list) -> None:
             if os.path.isfile(file):
                 cmd = f'cp {file} {val_folder}'
                 os.system(cmd)
-                
+
 # The code below was written when we were using the tags to make the selection of the images.
 
 
@@ -455,6 +458,3 @@ def generate_random_set(tag_names: list, n_examples: int, save: bool = False) ->
         # save the dataframe to the folder tags/
         if save:
             hp.save_pd_csv(df, st.data_dir + '/tags', 'tags_images_subset_' + item)
-
-
-
