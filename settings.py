@@ -4,6 +4,8 @@
 # Description: This file contain the main settings for running the codes.
 # Project: One/Few-Shot Learning for Galaxy Zoo
 
+# This is when we were using tags to generate the training and validation sets.
+
 # Steps
 # 1) Process the tag file which Mike shared.
 # 2) Find the set of images which exists in the DECaLS DR5 folder, using the csv file containing the tags.
@@ -21,6 +23,17 @@
 # Ring         | 2735     | 0.8 GB | $DATA/data/categories/ring
 # Elliptical   | 943      | 0.3 GB | $DATA/data/categories/elliptical
 # ---------------------------------------------------------------------
+
+# Issues: There were not enough tags to generate the training and validation sets.
+# Option: Use the volunteers' votes to generate the training and validation sets.
+
+# Steps
+# 1) Correct for the right location of the images and check if the images exist in Mike's folder.
+# 2) Generate the description files for spirals and ellipticals based on selection cuts.
+# 3) Pick a subset of this data, for example, 2000 out of 8000.
+# 4) Copy the data (per category) from Mike's folder to the new folder ($DATA/data/images/spiral/object.jpg).
+# 5) Split the data (csv/dataframe) into training and validation sets.
+# 6) Copy the training and validation images into the ml/ folder.
 
 # DECaLS (the data is in Mike's directory on ARC cluster)
 decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
