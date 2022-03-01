@@ -26,21 +26,23 @@ class SiameseNetwork(nn.Module):
 
         # Create an MLP (multi-layer perceptron) as the classification head.
         # Classifies if provided combined feature vector of the 2 images represent same player or different.
-        self.cls_head = nn.Sequential(
-            nn.Dropout(p=0.5),
-            nn.Linear(out_features, 512),
-            nn.BatchNorm1d(512),
-            nn.ReLU(),
+        # self.cls_head = nn.Sequential(
+        #     nn.Dropout(p=0.5),
+        #     nn.Linear(out_features, 512),
+        #     nn.BatchNorm1d(512),
+        #     nn.ReLU(),
 
-            nn.Dropout(p=0.5),
-            nn.Linear(512, 64),
-            nn.BatchNorm1d(64),
-            nn.Sigmoid(),
-            nn.Dropout(p=0.5),
+        #     nn.Dropout(p=0.5),
+        #     nn.Linear(512, 64),
+        #     nn.BatchNorm1d(64),
+        #     nn.Sigmoid(),
+        #     nn.Dropout(p=0.5),
 
-            nn.Linear(64, 1),
-            nn.Sigmoid(),
-        )
+        #     nn.Linear(64, 1),
+        #     nn.Sigmoid(),
+        # )
+
+        self.cls_head = nn.Sigmoid()
 
     def forward(self, img1: torch.tensor, img2: torch.tensor) -> torch.tensor:
         """Calculates the similarity between two images.
