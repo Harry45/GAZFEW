@@ -8,6 +8,7 @@
 #SBATCH --partition=short
 #SBATCH --cluster=htc
 #SBATCH --gres=gpu:1
+#SBATCH --output=jobs/%j.out
 
 module purge
 module load Anaconda3
