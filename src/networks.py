@@ -42,7 +42,7 @@ class SiameseNetwork(nn.Module):
         #     nn.Sigmoid(),
         # )
 
-        self.cls_head = nn.Sigmoid()
+        self.cls_head = nn.Sequential(nn.Linear(out_features, 512), nn.Sigmoid(),)
 
     def forward(self, img1: torch.tensor, img2: torch.tensor) -> torch.tensor:
         """Calculates the similarity between two images.
