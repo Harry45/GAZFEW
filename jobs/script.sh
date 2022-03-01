@@ -9,8 +9,6 @@
 #SBATCH --cluster=htc
 #SBATCH --gres=gpu:1
 
-rsync -r $HOME/GAZFEW/ ./
-
 module purge
 module load Anaconda3
 export CONPREFIX=$DATA/pytorch-env39
@@ -21,5 +19,3 @@ echo Training started.
 python train.py
 
 echo Training completed.
-
-rsync -r output/ $HOME/GAZFEW/
