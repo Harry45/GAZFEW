@@ -19,4 +19,4 @@ source activate $CONPREFIX
 
 python train.py
 
-rsync -r outputs/ $HOME/GAZFEW/
+rsync -r output/ $HOME/GAZFEW/
