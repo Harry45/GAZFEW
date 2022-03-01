@@ -60,7 +60,7 @@ class SiameseNetwork(nn.Module):
 
         # Multiply (element-wise) the feature vectors of the two images together,
         # to generate a combined feature vector representing the similarity between the two.
-        combined_features = torch.abs(feat1 - feat2)  # feat1 * feat2
+        combined_features = feat1 * feat2  # torch.abs(feat1 - feat2)  #
 
         # Pass the combined feature vector through classification head to get similarity value in the range of 0 to 1.
         output = self.cls_head(combined_features)
