@@ -97,4 +97,4 @@ for epoch in range(epochs):
 
 model_path = '../fs-models/'
 os.makedirs(model_path, exist_ok=True)
-torch.save(model.state_dict(), model_path + 'siamese_resnet18_testing.pth')
+torch.save(model.state_dict(), model_path + 'siamese_resnet18.pth')

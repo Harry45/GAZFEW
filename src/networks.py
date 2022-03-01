@@ -25,7 +25,7 @@ class SiameseNetwork(nn.Module):
         out_features = list(self.backbone.modules())[-1].out_features
 
         # Create an MLP (multi-layer perceptron) as the classification head.
-        # Classifies if provided combined feature vector of the 2 images represent same player or different.
+        # Classifies if provided combined feature vector of the 2 images represent the same image.
         # self.cls_head = nn.Sequential(
         #     nn.Dropout(p=0.5),
         #     nn.Linear(out_features, 512),
@@ -42,7 +42,7 @@ class SiameseNetwork(nn.Module):
         #     nn.Sigmoid(),
         # )
 
-        self.cls_head = nn.Sequential(nn.Linear(out_features, 512), nn.Sigmoid(),)
+        self.cls_head = nn.Sequential(nn.Linear(out_features, 1), nn.Sigmoid(),)
 
     def forward(self, img1: torch.tensor, img2: torch.tensor) -> torch.tensor:
         """Calculates the similarity between two images.
