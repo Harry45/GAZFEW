@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=arrykrish@gmail.com
-#SBATCH --time=00:20:00
+#SBATCH --time=00:50:00
 #SBATCH --job-name=siamese_network
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem-per-cpu=8G
