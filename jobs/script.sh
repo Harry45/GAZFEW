@@ -12,7 +12,6 @@
 rsync -r $HOME/GAZFEW/ ./
 
 module purge
-module load CUDA/11.3.1
 module load Anaconda3
 export CONPREFIX=$DATA/pytorch-env39
 source activate $CONPREFIX
