@@ -20,3 +20,5 @@ echo Training started.
 python train.py
 
 echo Training completed.
+
+rm -r __pycache__/

@@ -95,6 +95,6 @@ for epoch in range(epochs):
 # model = Model(*args, **kwargs)
 # model.load_state_dict(torch.load(PATH, map_location=device))
 
-model_path = './models/'
+model_path = '../fs-models/'
 os.makedirs(model_path, exist_ok=True)
 torch.save(model.state_dict(), model_path + 'siamese_resnet18.pth')
