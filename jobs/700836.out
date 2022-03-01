@@ -1,0 +1,5 @@
+Training started.
+[1 / 1]
+	Training: Loss=0.62	 Accuracy=0.66	
+	Validation: Loss=0.46	 Accuracy=0.85	
+Training completed.
