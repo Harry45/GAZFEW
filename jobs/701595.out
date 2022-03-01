@@ -1,0 +1,92 @@
+Training started.
+[1 / 30]
+	Training: Loss=0.63	 Accuracy=0.70	
+	Validation: Loss=0.43	 Accuracy=0.83	
+[2 / 30]
+	Training: Loss=0.38	 Accuracy=0.83	
+	Validation: Loss=0.27	 Accuracy=0.89	
+[3 / 30]
+	Training: Loss=0.28	 Accuracy=0.89	
+	Validation: Loss=0.26	 Accuracy=0.90	
+[4 / 30]
+	Training: Loss=0.21	 Accuracy=0.92	
+	Validation: Loss=0.28	 Accuracy=0.89	
+[5 / 30]
+	Training: Loss=0.15	 Accuracy=0.94	
+	Validation: Loss=0.19	 Accuracy=0.93	
+[6 / 30]
+	Training: Loss=0.12	 Accuracy=0.96	
+	Validation: Loss=0.19	 Accuracy=0.95	
+[7 / 30]
+	Training: Loss=0.11	 Accuracy=0.97	
+	Validation: Loss=0.28	 Accuracy=0.91	
+[8 / 30]
+	Training: Loss=0.07	 Accuracy=0.97	
+	Validation: Loss=0.31	 Accuracy=0.95	
+[9 / 30]
+	Training: Loss=0.11	 Accuracy=0.96	
+	Validation: Loss=0.23	 Accuracy=0.93	
+[10 / 30]
+	Training: Loss=0.06	 Accuracy=0.98	
+	Validation: Loss=0.22	 Accuracy=0.94	
+[11 / 30]
+	Training: Loss=0.05	 Accuracy=0.98	
+	Validation: Loss=0.22	 Accuracy=0.95	
+[12 / 30]
+	Training: Loss=0.07	 Accuracy=0.98	
+	Validation: Loss=0.54	 Accuracy=0.90	
+[13 / 30]
+	Training: Loss=0.05	 Accuracy=0.99	
+	Validation: Loss=0.28	 Accuracy=0.94	
+[14 / 30]
+	Training: Loss=0.04	 Accuracy=0.99	
+	Validation: Loss=0.20	 Accuracy=0.94	
+[15 / 30]
+	Training: Loss=0.04	 Accuracy=0.99	
+	Validation: Loss=0.30	 Accuracy=0.93	
+[16 / 30]
+	Training: Loss=0.02	 Accuracy=0.99	
+	Validation: Loss=0.36	 Accuracy=0.94	
+[17 / 30]
+	Training: Loss=0.06	 Accuracy=0.98	
+	Validation: Loss=0.29	 Accuracy=0.94	
+[18 / 30]
+	Training: Loss=0.02	 Accuracy=0.99	
+	Validation: Loss=0.41	 Accuracy=0.92	
+[19 / 30]
+	Training: Loss=0.04	 Accuracy=0.98	
+	Validation: Loss=0.29	 Accuracy=0.95	
+[20 / 30]
+	Training: Loss=0.02	 Accuracy=0.99	
+	Validation: Loss=0.22	 Accuracy=0.96	
+[21 / 30]
+	Training: Loss=0.02	 Accuracy=0.99	
+	Validation: Loss=0.50	 Accuracy=0.95	
+[22 / 30]
+	Training: Loss=0.05	 Accuracy=0.99	
+	Validation: Loss=0.33	 Accuracy=0.95	
+[23 / 30]
+	Training: Loss=0.04	 Accuracy=0.99	
+	Validation: Loss=0.18	 Accuracy=0.95	
+[24 / 30]
+	Training: Loss=0.01	 Accuracy=1.00	
+	Validation: Loss=0.30	 Accuracy=0.97	
+[25 / 30]
+	Training: Loss=0.05	 Accuracy=0.98	
+	Validation: Loss=0.17	 Accuracy=0.94	
+[26 / 30]
+	Training: Loss=0.03	 Accuracy=0.99	
+	Validation: Loss=0.17	 Accuracy=0.95	
+[27 / 30]
+	Training: Loss=0.02	 Accuracy=0.99	
+	Validation: Loss=0.22	 Accuracy=0.96	
+[28 / 30]
+	Training: Loss=0.02	 Accuracy=0.99	
+	Validation: Loss=0.26	 Accuracy=0.94	
+[29 / 30]
+	Training: Loss=0.01	 Accuracy=1.00	
+	Validation: Loss=0.52	 Accuracy=0.94	
+[30 / 30]
+	Training: Loss=0.00	 Accuracy=1.00	
+	Validation: Loss=0.23	 Accuracy=0.97	
+Training completed.
