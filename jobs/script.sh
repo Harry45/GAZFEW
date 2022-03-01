@@ -16,6 +16,10 @@ module load Anaconda3
 export CONPREFIX=$DATA/pytorch-env39
 source activate $CONPREFIX
 
+echo Training started.
+
 python train.py
+
+echo Training completed.
 
 rsync -r output/ $HOME/GAZFEW/

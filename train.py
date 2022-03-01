@@ -32,7 +32,7 @@ writer = SummaryWriter(os.path.join(out_path, "summary"))
 
 best_val = 10000000000
 
-epochs = 10
+epochs = 5
 
 for epoch in range(epochs):
     print("[{} / {}]".format(epoch+1, epochs))
