@@ -1,4 +1,3 @@
-
 import os
 import torch
 from torch.utils.data import DataLoader
@@ -16,8 +15,8 @@ os.makedirs(out_path, exist_ok=True)
 # Set device to CUDA if a CUDA device is available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-train_dataset = DataSet(st.train_path, shuffle=True, augment=True, normalise=False)
-val_dataset = DataSet(st.val_path, shuffle=False, augment=False, normalise=False)
+train_dataset = DataSet(st.train_path, shuffle=True, augment=True)
+val_dataset = DataSet(st.val_path, shuffle=False, augment=False)
 
 train_dataloader = DataLoader(train_dataset, batch_size=8, drop_last=True)
 val_dataloader = DataLoader(val_dataset, batch_size=8)
@@ -30,12 +29,10 @@ criterion = torch.nn.BCELoss()
 
 writer = SummaryWriter(os.path.join(out_path, "summary"))
 
-best_val = 10000000000
-
 epochs = 30
 
 for epoch in range(epochs):
-    print("[{} / {}]".format(epoch+1, epochs))
+    print("[{} / {}]".format(epoch + 1, epochs))
     model.train()
 
     losses = []
@@ -57,10 +54,10 @@ for epoch in range(epochs):
         correct += torch.count_nonzero(y == (prob > 0.5)).item()
         total += len(y)
 
-    writer.add_scalar('train_loss', sum(losses)/len(losses), epoch)
+    writer.add_scalar('train_loss', sum(losses) / len(losses), epoch)
     writer.add_scalar('train_acc', correct / total, epoch)
 
-    print("\tTraining: Loss={:.2f}\t Accuracy={:.2f}\t".format(sum(losses)/len(losses), correct / total))
+    print("\tTraining: Loss={:.2f}\t Accuracy={:.2f}\t".format(sum(losses) / len(losses), correct / total))
     # Training Loop End
 
     # Evaluation Loop Start
@@ -80,7 +77,7 @@ for epoch in range(epochs):
         correct += torch.count_nonzero(y == (prob > 0.5)).item()
         total += len(y)
 
-    val_loss = sum(losses)/max(1, len(losses))
+    val_loss = sum(losses) / max(1, len(losses))
     writer.add_scalar('val_loss', val_loss, epoch)
     writer.add_scalar('val_acc', correct / total, epoch)
 

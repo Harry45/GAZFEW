@@ -20,7 +20,7 @@ import settings as st
 
 class DataSet(IterableDataset):
 
-    def __init__(self, path: str, shuffle: bool = False, augment: bool = False, normalise: bool = False):
+    def __init__(self, path: str, shuffle: bool = False, augment: bool = False):
 
         # shuffle the pairs
         self.shuffle = shuffle
@@ -31,17 +31,8 @@ class DataSet(IterableDataset):
         # store the path
         self.path = path
 
-        # store the choice of normalisation
-        self.normalise = normalise
-
-        # this is the default transform
-        # trans = [transforms.ToTensor(), transforms.Resize(st.new_img_size[1:])]
-        trans = [transforms.Grayscale(num_output_channels=1), transforms.ToTensor(),
-                 transforms.Resize(300), transforms.CenterCrop(224)]
-
-        # apply normalisation if set in argument
-        if self.normalise:
-            trans.append(transforms.Normalize(mean=st.mean_img, std=st.std_img))
+        # transformations
+        trans = st.transformation
 
         # if we choose to augment, we apply the horizontal flip
         if self.augment:
