@@ -4,19 +4,13 @@
 # Description: This file contains some helper functions.
 # Project: One/Few-Shot Learning for Galaxy Zoo
 
-from logging import raiseExceptions
+
 import os
+import json
 from typing import NewType
+import torch
 import numpy as np
 import pandas as pd
-
-# I cannot import torch on the cluster using Jupyter Notebook
-# We have to submit a script in order for it to find a GPU
-# We installed PyTorch GPU
-# So we are not importing it for normal tests (or we can install the cpu version for simple test?)
-# No, we do not want to have both PyTorch GPU and PyTorch CPU
-# PyTorch CPU is a subset of PyTorch GPU
-# We have to uncomment parts of the code when submitting a job on the cluster
 
 TorchTensor = NewType('TorchTensor', classmethod)
 
@@ -45,7 +39,7 @@ def dict_to_tensor(dictionary: dict, keys: list) -> TorchTensor:
         torch.tensor: the pytorch tensor
     """
 
-    return None  # torch.tensor([dictionary[key] for key in keys])
+    return torch.tensor([dictionary[key] for key in keys])
 
 
 def subset_dict(dictionary: dict, keys: list) -> dict:
@@ -178,3 +172,39 @@ def read_parquet(folder_name: str, file_name: str) -> pd.DataFrame:
     else:
         df = pd.read_parquet(path)
         return df
+
+
+def save_dict(dictionary: dict, folder_name: str, file_name: str) -> None:
+    """Save a dictionary to a json file
+
+    Args:
+        dictionary (dict): The dictionary to be saved
+        folder_name (str): The name of the folder
+        file_name (str): The name of the file
+    """
+
+    os.makedirs(folder_name, exist_ok=True)
+
+    path = folder_name + '/' + file_name + '.json'
+
+    with open(path, 'w') as file:
+        json.dump(dictionary, file)
+
+
+def read_dict(folder_name: str, file_name: str) -> dict:
+    """Read a dictionary from a json file
+
+    Args:
+        folder_name (str): The name of the folder
+        file_name (str): The name of the file
+
+    Returns:
+        dict: The dictionary
+    """
+
+    path = folder_name + '/' + file_name + '.json'
+
+    with open(path, 'r') as file:
+        dictionary = json.load(file)
+
+    return dictionary

@@ -42,7 +42,7 @@ def load_ml_model(path: str) -> classmethod:
 
 
 def calculate_scores(
-        test_image: str, dataframe: pd.DataFrame, model: classmethod, save: bool = False, **kwargs) -> pd.DataFrame:
+        test_image: str, dataframe: pd.DataFrame, model: classmethod, save: bool = False) -> pd.DataFrame:
     """Given an image, we will iterate through each object in the dataframe and calculate a similarity score.
     The dataframe is expected to have columns consisting of the columns:
     - 'iauname'
@@ -88,7 +88,7 @@ def calculate_scores(
         scores.append(model(img1_trans.unsqueeze(1), img2_trans.unsqueeze(1)).item())
 
     # a dataframe of the scores only
-    scores = pd.DataFrame(scores, columns=['scores_' + test_image])
+    scores = pd.DataFrame(scores, columns=['scores'])
 
     # the meta data for the objects
     metadata = dataframe.iloc[0:ntest][['iauname', 'ra', 'dec', 'redshift', 'png_loc']]
@@ -97,6 +97,7 @@ def calculate_scores(
     results = pd.concat([metadata, scores], axis=1)
 
     if save:
-        hp.save_pd_csv(results, 'test-images', test_image)
+        dictionary = {test_image: results}
+        hp.save_dict(dictionary, 'test-images', test_image)
 
-    return results
+    return dictionary
