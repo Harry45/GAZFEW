@@ -100,6 +100,6 @@ def calculate_scores(
     dictionary = {test_image[0:-4]: results}
 
     if save:
-        hp.save_pickle(dictionary, 'test-images', test_image)
+        hp.save_pickle(dictionary, 'test-images', test_image[0:-4])
 
     return dictionary
