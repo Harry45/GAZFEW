@@ -5,6 +5,7 @@
 # Project: One/Few-Shot Learning for Galaxy Zoo
 
 
+import pickle
 import os
 import json
 from typing import NewType
@@ -208,3 +209,39 @@ def read_dict(folder_name: str, file_name: str) -> dict:
         dictionary = json.load(file)
 
     return dictionary
+
+
+def save_pickle(obj: object, folder_name: str, file_name: str) -> None:
+    """Save a dictionary to a json file
+
+    Args:
+        obj (object): The object to be saved
+        folder_name (str): The name of the folder
+        file_name (str): The name of the file
+    """
+
+    os.makedirs(folder_name, exist_ok=True)
+
+    path = folder_name + '/' + file_name + '.pkl'
+
+    with open(path, 'wb') as file:
+        pickle.dump(obj, file)
+
+
+def load_pickle(folder_name: str, file_name: str) -> object:
+    """Read a dictionary from a json file
+
+    Args:
+        folder_name (str): The name of the folder
+        file_name (str): The name of the file
+
+    Returns:
+        object: The object
+    """
+
+    path = folder_name + '/' + file_name + '.pkl'
+
+    with open(path, 'rb') as file:
+        obj = pickle.load(file)
+
+    return obj
