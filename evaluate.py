@@ -76,7 +76,9 @@ def calculate_scores(
 
     scores = list()
 
-    for image in dataframe.png_loc.values:
+    ntest = 100
+
+    for image in dataframe.png_loc.values[0:ntest]:
 
         # load the second image
         pil2, _ = ui.load_image_full(st.decals + '/' + image)
@@ -89,7 +91,7 @@ def calculate_scores(
     scores = pd.DataFrame(scores, columns=['scores'])
 
     # the meta data for the objects
-    metadata = dataframe[['iauname', 'ra', 'dec', 'redshift', 'png_loc']]
+    metadata = dataframe.iloc[0:ntest][['iauname', 'ra', 'dec', 'redshift', 'png_loc']]
 
     # the final dataframe
     results = pd.concat([metadata, scores], axis=1)
