@@ -96,8 +96,10 @@ def calculate_scores(
     # the final dataframe
     results = pd.concat([metadata, scores], axis=1)
 
+    # create a dictionary with the key being the object name and the value being the score
+    dictionary = {test_image: results}
+
     if save:
-        dictionary = {test_image: results}
         hp.save_dict(dictionary, 'test-images', test_image)
 
     return dictionary
