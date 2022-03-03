@@ -42,7 +42,7 @@ def load_ml_model(path: str) -> classmethod:
 
 
 def calculate_scores(
-        test_image: str, dataframe: pd.dataFrame, model: classmethod, save: bool = False, **kwargs) -> pd.DataFrame:
+        test_image: str, dataframe: pd.DataFrame, model: classmethod, save: bool = False, **kwargs) -> pd.DataFrame:
     """Given an image, we will iterate through each object in the dataframe and calculate a similarity score.
     The dataframe is expected to have columns consisting of the columns:
     - 'iauname'
