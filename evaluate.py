@@ -3,6 +3,7 @@
 # Email: arrykrish@gmail.com/a.mootoovaloo17@imperial.ac.uk/arrykrishna.mootoovaloo@physics.ox.ac.uk
 # Description: Given a test image, find similar objects.
 # Project: One/Few-Shot Learning for Galaxy Zoo
+# NOTE: this script is still work in progress!
 
 import pandas as pd
 import torch
@@ -26,7 +27,7 @@ def load_ml_model(path: str) -> classmethod:
     """
 
     # we will normally evaluate on CPU (to maend if we want to predict on GPU)
-    device = torch.device('cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # the Siamese network we are using
     model = SiameseNetwork(backbone="resnet18")
@@ -38,11 +39,11 @@ def load_ml_model(path: str) -> classmethod:
     # evaluate the load
     model.eval()
 
-    return model
+    return model, device
 
 
 def calculate_scores(
-        test_image: str, dataframe: pd.DataFrame, model: classmethod, save: bool = False) -> pd.DataFrame:
+        test_image: str, dataframe: pd.DataFrame, model: classmethod, device: str, save: bool = False) -> pd.DataFrame:
     """Given an image, we will iterate through each object in the dataframe and calculate a similarity score.
     The dataframe is expected to have columns consisting of the columns:
     - 'iauname'

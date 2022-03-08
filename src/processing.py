@@ -134,10 +134,16 @@ def copy_images(df: pd.DataFrame, foldername: str) -> None:
     nobjects = df.shape[0]
 
     # create a folder where we want to store the images
-    mainfolder = st.data_dir + '/' + 'images' + '/' + foldername + '/'
+    folder = st.data_dir + '/' + 'images' + '/' + foldername + '/'
 
-    if not os.path.exists(mainfolder):
-        os.makedirs(mainfolder)
+    # create the different folders if they do not exist (remove them if they exist already)
+    if os.path.exists(folder):
+
+        # delete the folder first if it exists
+        shutil.rmtree(folder)
+
+    # then create a new one
+    os.makedirs(folder)
 
     counts = 0
     # fetch the data from Mike's directory
@@ -146,25 +152,31 @@ def copy_images(df: pd.DataFrame, foldername: str) -> None:
         decals_file = st.decals + '/' + df['png_loc'].iloc[i]
 
         if os.path.isfile(decals_file):
-            cmd = f'cp {decals_file} {mainfolder}'
+            cmd = f'cp {decals_file} {folder}'
             os.system(cmd)
             counts += 1
 
-    print(f'{counts} images saved to {mainfolder}')
+    print(f'{counts} images saved to {folder}')
 
 
-def split_data(tag_names: list, val_size: float = 0.35, save: bool = False) -> dict:
+def split_data(tag_names: list, val_size: float = 0.20, test_size: float = 0.20, save: bool = False) -> dict:
     """Split the data into training and validation size for assessing the performance of the network.
 
     Args:
         tag_names (list): A list of the tag names, for example, elliptical, ring, spiral
-        val_size (float, optional): The size of the validation set, a number between 0 and 1. Defaults to 0.35.
+        val_size (float, optional): The size of the validation set, a number between 0 and 1. Defaults to 0.20.
+        test_size (float, optional): The size of the testing set, a number between 0 and 1. Defaults to 0.20.
         save (bool): Choose if we want to save the outputs generated. Defaults to False.
 
     Returns:
         dict: A dictionary consisting of the training and validation data.
     """
-
+    
+    # compute the training size 
+    train_size = 1.0 - val_size - test_size 
+    
+    assert train_size > 0, "The validation and/or test size is too large."
+    
     d = {}
 
     for item in tag_names:
@@ -172,24 +184,70 @@ def split_data(tag_names: list, val_size: float = 0.35, save: bool = False) -> d
         # load the csv file
         tag_file = hp.read_parquet(st.data_dir, 'descriptions/subset_' + item)
 
-        # split the data into train and validation
-        train, validate = sm.train_test_split(tag_file, test_size=val_size)
+        # split the data into train and test        
+        dummy, test = sm.train_test_split(tag_file, test_size=test_size)
+        
+        # the validation size needs to be updated based on the first split 
+        val_new = val_size * tag_file.shape[0] / dummy.shape[0]
+        
+        # then we generate the training and validation set 
+        train, validate = sm.train_test_split(dummy,test_size=val_new)
 
         # reset the index (not required, but just in case)
+        test.reset_index(drop=True, inplace=True)
         train.reset_index(drop=True, inplace=True)
         validate.reset_index(drop=True, inplace=True)
 
         # store the dataframes in the dictionary
-        d[item] = {'train': train, 'validate': validate}
+        d[item] = {'train': train, 'validate': validate, 'test': test}
 
         if save:
-            hp.save_pd_csv(d[item]['train'], st.data_dir + '/' + 'ml/train_tags', item)
-            hp.save_pd_csv(d[item]['validate'], st.data_dir + '/' + 'ml/validate_tags', item)
+            hp.save_pd_csv(d[item]['train'], st.data_dir + '/' + 'ml/train', item)
+            hp.save_pd_csv(d[item]['validate'], st.data_dir + '/' + 'ml/validate', item)
+            hp.save_pd_csv(d[item]['test'], st.data_dir + '/' + 'ml/test', item)
 
     return d
 
 
-def images_train_validate(tag_names: list) -> None:
+def move_data(subset: str, object_type: str) -> None:
+    """Move data to the right folder. 
+
+    Args:
+        subset (str) : validate or train or test 
+        object_type (str): name of the object, for example, 'spiral', we want to move
+    """
+    
+    assert subset in ['validate', 'test', 'train'], "Typical group in ML: validate, train, test"
+    
+    # the Machine Learning set (validate, train, test)
+    ml_set = hp.load_csv(st.data_dir + '/ml/'+ subset, object_type)
+       
+    # number of objects we have 
+    nobject = ml_set.shape[0]
+    
+    # folder where we want to store the images
+    folder = st.data_dir + '/' + 'ml' + '/' + subset + '_images' + '/' + object_type + '/'
+    
+    # create the different folders if they do not exist (remove them if they exist already)
+    if os.path.exists(folder):
+
+        # delete the folder first if it exists
+        shutil.rmtree(folder)
+
+    # then create a new one
+    os.makedirs(folder)
+    
+    # copy the data from images/item to categories/train/item
+    for j in range(nobject):
+
+        file = st.data_dir + '/' + 'images' + '/' + object_type + '/' + ml_set.iauname.iloc[j] + '.png'
+
+        if os.path.isfile(file):
+            cmd = f'cp {file} {folder}'
+            os.system(cmd)
+
+                
+def images_train_validate_test(tag_names: list) -> None:
     """Read the csv file for a particular tag and copy the images in their respective folders
 
     Args:
@@ -198,53 +256,9 @@ def images_train_validate(tag_names: list) -> None:
     """
 
     for item in tag_names:
+        for subset in ['validate', 'train', 'test']:
+            move_data(subset, item)
 
-        # read the training and validation file for a particular tag
-        training = hp.load_csv(st.data_dir + '/ml/train_tags', item)
-        validation = hp.load_csv(st.data_dir + '/ml/validate_tags', item)
-
-        # number of items in training and validation
-        ntrain = training.shape[0]
-        nvalidate = validation.shape[0]
-
-        # create a folder where we want to store the images
-        train_folder = st.data_dir + '/' + 'ml' + '/' + 'train_images' + '/' + item + '/'
-        val_folder = st.data_dir + '/' + 'ml' + '/' + 'validate_images' + '/' + item + '/'
-
-        # create the different folders if they do not exist (remove them if they exist already)
-        if os.path.exists(train_folder):
-
-            # delete the folder first if it exists
-            shutil.rmtree(train_folder)
-
-        # then create a new one
-        os.makedirs(train_folder)
-
-        if os.path.exists(val_folder):
-
-            # delete the folder first if it exists
-            shutil.rmtree(val_folder)
-
-        # then create a new one
-        os.makedirs(val_folder)
-
-        # copy the data from images/item to categories/train/item
-        for j in range(ntrain):
-
-            file = st.data_dir + '/' + 'images' + '/' + item + '/' + training.iauname.iloc[j] + '.png'
-
-            if os.path.isfile(file):
-                cmd = f'cp {file} {train_folder}'
-                os.system(cmd)
-
-        # copy the data from categories/subset_item to categories/validate/item
-        for j in range(nvalidate):
-
-            file = st.data_dir + '/' + 'images' + '/' + item + '/' + validation.iauname.iloc[j] + '.png'
-
-            if os.path.isfile(file):
-                cmd = f'cp {file} {val_folder}'
-                os.system(cmd)
 
 # The code below was written when we were using the tags to make the selection of the images.
 

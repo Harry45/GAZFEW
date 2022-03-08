@@ -52,6 +52,7 @@ if normalise:
 # training and validation paths
 train_path = data_dir + '/ml/train_images/'
 val_path = data_dir + '/ml/validate_images/'
+test_path = data_dir + '/ml/test_images/'
 
 # ----------------------------------------------------------------------------------
 condition_spiral = {'has-spiral-arms_yes_fraction': 0.75, 'has-spiral-arms_yes': 20}
