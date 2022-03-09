@@ -19,6 +19,13 @@ import settings as st
 
 
 class DataSet(IterableDataset):
+    """Data loader for the galaxy zoo data/images
+
+    Args:
+        path (str): Path to the data folder.
+        shuffle (bool, optional): Option to shuffle the data. Defaults to False.
+        augment (bool, optional): Option to augment the data. Defaults to False.
+    """
 
     def __init__(self, path: str, shuffle: bool = False, augment: bool = False):
 
