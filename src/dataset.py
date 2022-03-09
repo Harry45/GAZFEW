@@ -7,6 +7,7 @@
 import os
 import glob
 import time
+from typing import Tuple
 
 import torch
 import numpy as np
@@ -115,8 +116,13 @@ class DataSet(IterableDataset):
         # convert to numpy array
         self.indices2 = np.array(self.indices2)
 
-    def __iter__(self):
+    def __iter__(self) -> Tuple[Tuple[torch.Tensor, torch.Tensor], int, Tuple[int, int]]:
+        """Iterate over the data and build up pairs of images.
 
+        Yields:
+            Iterator[Tuple[Tuple[torch.Tensor, torch.Tensor], int, Tuple[int,
+            int]]]: The two images, 1 if same class else 0, and the class indices.
+        """
         for idx, idx2 in zip(self.indices1, self.indices2):
 
             # get the image paths for the pair
@@ -139,4 +145,9 @@ class DataSet(IterableDataset):
             yield (image1, image2), torch.FloatTensor([class1 == class2]), (class1, class2)
 
     def __len__(self):
+        """Return the length of the dataset.
+
+        Returns:
+            int: The length of the dataset.
+        """
         return len(self.image_paths)
