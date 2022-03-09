@@ -1,8 +1,11 @@
+"""
+Dataloader for teh Galaxy Zoo data using PyTorch.
+
 # Author: Arrykrishna Mootoovaloo
 # Date: January 2022
 # Email: arrykrish@gmail.com/a.mootoovaloo17@imperial.ac.uk/arrykrishna.mootoovaloo@physics.ox.ac.uk
-# Description: Dataloader for PyTorch.
 # Project: One/Few-Shot Learning for Galaxy Zoo
+"""
 
 import os
 import glob
