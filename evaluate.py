@@ -104,3 +104,5 @@ def calculate_scores(
         hp.save_pickle(dictionary, 'test-images', test_image[0:-4])
 
     return dictionary
+
+
