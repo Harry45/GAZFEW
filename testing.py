@@ -28,8 +28,7 @@ model.to(device)
 model.load_state_dict(loaded_model)
 model.eval()
 
-# decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
-decals = hp.load_pickle('./', 'image_locations')
+decals = hp.load_pickle('supplement', 'image_locations')
 test = '/home/phys2286/GAZFEW/test-images/J102532.37+052457.6.png'
 
 test_dataset = TestData(decals, test)
