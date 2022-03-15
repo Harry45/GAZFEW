@@ -23,24 +23,13 @@ import settings as st
 
 class TestData(IterableDataset):
 
-	def __init__(self, gz_path: str, test_path: str, shuffle: bool = False, augment: bool = False):
-
-		# shuffle the pairs
-		self.shuffle = shuffle
-
-		# choose if we want to augment the data
-		self.augment = augment
+	def __init__(self, gz_path: str, test_path: str):
 
 		# store the path
 		self.gz_path = gz_path
 
 		# transformations
 		trans = st.transformation
-
-		# if we choose to augment, we apply the horizontal flip
-		if self.augment:
-
-			trans.append(transforms.RandomHorizontalFlip(p=0.5))
 
 		# create the transform
 		self.transform = transforms.Compose(trans)

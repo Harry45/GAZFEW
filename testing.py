@@ -31,8 +31,8 @@ model.eval()
 decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
 test = '/home/phys2286/GAZFEW/test-images/J102532.37+052457.6.png'
 
-test_dataset = TestData(decals, test, shuffle=False, augment=False)
-test_dataloader = DataLoader(test_dataset, batch_size=1)
+test_dataset = TestData(decals, test)
+test_dataloader = DataLoader(test_dataset, batch_size=8)
 
 scores = list() 
 
@@ -44,7 +44,8 @@ for i, (img1, img2) in enumerate(test_dataloader):
 
     prob = model(img1, img2)
 
-    scores.append(prob.item())
+    # scores.append(prob.item())
+    scores += prob.cpu().detach().view(-1).numpy().tolist()
     
     if (i+1)%100 == 0:
         print('Already tested {0} out of {1}'.format(i, test_dataset.nimages))
