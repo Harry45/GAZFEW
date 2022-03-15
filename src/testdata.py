@@ -46,7 +46,7 @@ class TestData(IterableDataset):
 		self.transform = transforms.Compose(trans)
 
 		# the locations of the galaxy images 
-		self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))[0]
+		self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))[0:10]
 
 		# number of images 
 		self.nimages = len(self.gz_images)
