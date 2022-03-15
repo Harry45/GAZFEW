@@ -5,6 +5,7 @@
 # Project: One/Few-Shot Learning for Galaxy Zoo
 
 import os
+import time 
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
@@ -35,6 +36,8 @@ test_dataloader = DataLoader(test_dataset, batch_size=1)
 
 scores = list() 
 
+t0 = time.time()
+
 for i, (img1, img2) in enumerate(test_dataloader):
 
     img1, img2 = map(lambda x: x.to(device), [img1, img2])
@@ -45,6 +48,10 @@ for i, (img1, img2) in enumerate(test_dataloader):
     
     if (i+1)%100 == 0:
         print('Already tested {0} out of {1}'.format(i, test_dataset.nimages))
+
+t1 = time.time()
+
+print("Total time taken is {}".format(t1 - t0))
 
 # a dataframe of the scores only
 scores = pd.DataFrame(scores, columns=['scores'])
