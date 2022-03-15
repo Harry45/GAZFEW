@@ -1,5 +1,5 @@
 """
-Dataloader for teh Galaxy Zoo data using PyTorch.
+Dataloader for the Galaxy Zoo data using PyTorch.
 
 # Author: Arrykrishna Mootoovaloo
 # Date: January 2022
