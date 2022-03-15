@@ -21,6 +21,7 @@ from PIL import Image
 # our script and functions
 import settings as st
 
+
 class TestData(IterableDataset):
 
 	def __init__(self, gz_path: str, test_path: str):
@@ -35,7 +36,8 @@ class TestData(IterableDataset):
 		self.transform = transforms.Compose(trans)
 
 		# the locations of the galaxy images 
-		self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))[0:10]
+		# self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))[0:500]
+		self.gz_images = gz_path[0:500]
 
 		# number of images 
 		self.nimages = len(self.gz_images)

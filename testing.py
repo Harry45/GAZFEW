@@ -28,11 +28,12 @@ model.to(device)
 model.load_state_dict(loaded_model)
 model.eval()
 
-decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
+# decals = '/data/phys-zooniverse/chri5177/galaxy_zoo/decals/dr5/png'
+decals = hp.load_pickle('./', 'image_locations')
 test = '/home/phys2286/GAZFEW/test-images/J102532.37+052457.6.png'
 
 test_dataset = TestData(decals, test)
-test_dataloader = DataLoader(test_dataset, batch_size=8)
+test_dataloader = DataLoader(test_dataset, batch_size=32)
 
 scores = list() 
 
@@ -58,5 +59,5 @@ print("Total time taken is {}".format(t1 - t0))
 scores = pd.DataFrame(scores, columns=['scores'])
 scores['iauname'] = list(map(lambda x: x.split(os.sep)[-1][:-4], test_dataset.gz_images))
 
-scores.to_csv('test.csv')
+scores.to_csv('test-images/test.csv')
 
