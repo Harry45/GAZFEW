@@ -46,6 +46,8 @@ for i, ((img1, img2), y, (class1, class2)) in enumerate(test_dataloader):
 
     prob = model(img1, img2)
     loss = criterion(prob, y)
+    
+    print("Probability is {0:.2f}".format(prob.item()))
 
     losses.append(loss.item())
     correct += torch.count_nonzero(y == (prob > 0.5)).item()
