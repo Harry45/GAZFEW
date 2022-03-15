@@ -37,11 +37,14 @@ scores = list()
 
 for i, (img1, img2) in enumerate(test_dataloader):
 
-	img1, img2 = map(lambda x: x.to(device), [img1, img2])
+    img1, img2 = map(lambda x: x.to(device), [img1, img2])
 
-	prob = model(img1, img2)
+    prob = model(img1, img2)
 
-	scores.append(prob.item())
+    scores.append(prob.item())
+    
+    if (i+1)%100 == 0:
+        print('Already tested {0} out of {1}'.format(i, test_dataset.nimages))
 
 # a dataframe of the scores only
 scores = pd.DataFrame(scores, columns=['scores'])
