@@ -25,62 +25,62 @@ class TestData(IterableDataset):
 
 	def __init__(self, gz_path: str, test_path: str, shuffle: bool = False, augment: bool = False):
 
-        # shuffle the pairs
-        self.shuffle = shuffle
+		# shuffle the pairs
+		self.shuffle = shuffle
 
-        # choose if we want to augment the data
-        self.augment = augment
+		# choose if we want to augment the data
+		self.augment = augment
 
-        # store the path
-        self.gz_path = gz_path
+		# store the path
+		self.gz_path = gz_path
 
-        # transformations
-        trans = st.transformation
+		# transformations
+		trans = st.transformation
 
-        # if we choose to augment, we apply the horizontal flip
-        if self.augment:
+		# if we choose to augment, we apply the horizontal flip
+		if self.augment:
 
-            trans.append(transforms.RandomHorizontalFlip(p=0.5))
+			trans.append(transforms.RandomHorizontalFlip(p=0.5))
 
-        # create the transform
-        self.transform = transforms.Compose(trans)
+		# create the transform
+		self.transform = transforms.Compose(trans)
 
-        # the locations of the galaxy images 
-        self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))
+		# the locations of the galaxy images 
+		self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))
 
-        # number of images 
-        self.nimages = len(self.gz_images)
+		# number of images 
+		self.nimages = len(self.gz_images)
 
-        # the full path of the test image
-        self.test_path = test_path
+		# the full path of the test image
+		self.test_path = test_path
 
-    def __iter__(self):
+	def __iter__(self):
 
-        for idx in range(self.nimages):
+		for idx in range(self.nimages):
 
-            # get the image paths for the pair
-            image_path1 = self.test_path
-            image_path2 = self.gz_images[idx]
+			# get the image paths for the pair
+			image_path1 = self.test_path
+			image_path2 = self.gz_images[idx]
 
-            # load the two images
-            image1 = Image.open(image_path1).convert("RGB")
-            image2 = Image.open(image_path2).convert("RGB")
+			# load the two images
+			image1 = Image.open(image_path1).convert("RGB")
+			image2 = Image.open(image_path2).convert("RGB")
 
-            # transform the images
-            if self.transform:
-                image1 = self.transform(image1).float()
-                image2 = self.transform(image2).float()
+			# transform the images
+			if self.transform:
+				image1 = self.transform(image1).float()
+				image2 = self.transform(image2).float()
 
-            yield (image1, image2)
+			yield (image1, image2)
 
 
-    def __len__(self):
-        """Return the length of the dataset.
+	def __len__(self):
+		"""Return the length of the dataset.
 
-        Returns:
-            int: The length of the dataset.
-        """
-        return len(self.gz_images)
+		Returns:
+			int: The length of the dataset.
+		"""
+		return len(self.gz_images)
 
 
 
