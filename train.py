@@ -18,8 +18,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 train_dataset = DataSet(st.train_path, shuffle=True, augment=True)
 val_dataset = DataSet(st.val_path, shuffle=False, augment=False)
 
-train_dataloader = DataLoader(train_dataset, batch_size=8, drop_last=True)
-val_dataloader = DataLoader(val_dataset, batch_size=8)
+train_dataloader = DataLoader(train_dataset, batch_size=32, drop_last=True)
+val_dataloader = DataLoader(val_dataset, batch_size=32)
 
 model = SiameseNetwork(backbone="resnet18")
 model.to(device)
