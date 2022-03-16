@@ -83,15 +83,6 @@ for epoch in range(epochs):
 
     print("\tValidation: Loss={:.2f}\t Accuracy={:.2f}\t".format(val_loss, correct / total))
 
-# 1) Save on GPU, Load on CPU
-# device = torch.device("cuda")
-# model.to(device)
-# torch.save(model.state_dict(), PATH)
-
-# device = torch.device('cpu')
-# model = Model(*args, **kwargs)
-# model.load_state_dict(torch.load(PATH, map_location=device))
-
 model_path = '../fs-models/'
 os.makedirs(model_path, exist_ok=True)
 torch.save(model.state_dict(), model_path + 'siamese_resnet18_testing.pth')

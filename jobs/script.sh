@@ -4,7 +4,7 @@
 #SBATCH --time=01:30:00
 #SBATCH --job-name=siamese_network
 #SBATCH --ntasks-per-node=1
-#SBATCH --mem-per-cpu=8G
+#SBATCH --mem-per-cpu=32G
 #SBATCH --partition=short
 #SBATCH --cluster=htc
 #SBATCH --gres=gpu:1
