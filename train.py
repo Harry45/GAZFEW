@@ -29,7 +29,7 @@ criterion = torch.nn.BCELoss()
 
 writer = SummaryWriter(os.path.join(out_path, "summary"))
 
-epochs = 30
+epochs = 10
 
 for epoch in range(epochs):
     print("[{} / {}]".format(epoch + 1, epochs))
@@ -94,4 +94,4 @@ for epoch in range(epochs):
 
 model_path = '../fs-models/'
 os.makedirs(model_path, exist_ok=True)
-torch.save(model.state_dict(), model_path + 'siamese_resnet18.pth')
+torch.save(model.state_dict(), model_path + 'siamese_resnet18_testing.pth')
