@@ -17,11 +17,12 @@ from src.testdata import TestData
 from src.networks import SiameseNetwork
 
 
-def calculate_scores(folder: str):
+def calculate_scores(folder: str, bs: int = 64):
     """Use the deep learning model to calculate the similarity scores.
 
     Args:
         folder (str): path to the folder
+        bs (int): the batch size. Default: 64
     """
 
     path = os.path.join(os.getcwd(), folder, '*.png')
@@ -42,7 +43,7 @@ def calculate_scores(folder: str):
     for img in imgs:
 
         test_dataset = TestData(decals, img)
-        test_dataloader = DataLoader(test_dataset, batch_size=1)
+        test_dataloader = DataLoader(test_dataset, batch_size=bs)
 
         scores = list()
 
@@ -54,7 +55,6 @@ def calculate_scores(folder: str):
 
             prob = model(img1, img2)
 
-            # scores.append(prob.item())
             scores += prob.cpu().detach().view(-1).numpy().tolist()
 
             if (i + 1) % 100 == 0:
@@ -75,4 +75,4 @@ def calculate_scores(folder: str):
 
 
 if __name__ == '__main__':
-    calculate_scores('test-images')
+    calculate_scores('test-images', bs=64)
