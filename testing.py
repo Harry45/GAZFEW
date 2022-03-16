@@ -42,7 +42,7 @@ def calculate_scores(folder: str):
     for img in imgs:
 
         test_dataset = TestData(decals, img)
-        test_dataloader = DataLoader(test_dataset, batch_size=32)
+        test_dataloader = DataLoader(test_dataset, batch_size=1)
 
         scores = list()
 
