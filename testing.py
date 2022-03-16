@@ -5,20 +5,17 @@
 # Project: One/Few-Shot Learning for Galaxy Zoo
 
 import os
-import time 
+import time
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
-from torchvision import transforms
 
 # our scripts and functions
-import utils.imaging as ui
-import settings as st
 import utils.helpers as hp
 from src.testdata import TestData
 from src.networks import SiameseNetwork
 
-# we will normally evaluate on CPU (to maend if we want to predict on GPU)
+# choice of device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # load the model
@@ -34,7 +31,7 @@ test = '/home/phys2286/GAZFEW/test-images/J102532.37+052457.6.png'
 test_dataset = TestData(decals, test)
 test_dataloader = DataLoader(test_dataset, batch_size=32)
 
-scores = list() 
+scores = list()
 
 t0 = time.time()
 
@@ -46,8 +43,8 @@ for i, (img1, img2) in enumerate(test_dataloader):
 
     # scores.append(prob.item())
     scores += prob.cpu().detach().view(-1).numpy().tolist()
-    
-    if (i+1)%100 == 0:
+
+    if (i+1) % 100 == 0:
         print('Already tested {0} out of {1}'.format(i, test_dataset.nimages))
 
 t1 = time.time()
@@ -59,4 +56,3 @@ scores = pd.DataFrame(scores, columns=['scores'])
 scores['iauname'] = list(map(lambda x: x.split(os.sep)[-1][:-4], test_dataset.gz_images))
 
 scores.to_csv('test-images/test.csv')
-
