@@ -119,7 +119,7 @@ class DataSet(IterableDataset):
         # convert to numpy array
         self.indices2 = np.array(self.indices2)
 
-    def __iter__(self) -> Tuple[Tuple[torch.Tensor, torch.Tensor], int, Tuple[int, int]]:
+    def __iter__(self):
         """Iterate over the data and build up pairs of images.
 
         Yields:
