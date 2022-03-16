@@ -24,12 +24,12 @@ val_dataloader = DataLoader(val_dataset, batch_size=8)
 model = SiameseNetwork(backbone="resnet18")
 model.to(device)
 
-optimizer = torch.optim.Adam(model.parameters(), lr=1E-3, weight_decay=1E-5)
+optimizer = torch.optim.Adam(model.parameters(), lr=1E-4, weight_decay=1E-5)
 criterion = torch.nn.BCELoss()
 
 writer = SummaryWriter(os.path.join(out_path, "summary"))
 
-epochs = 10
+epochs = 30
 
 for epoch in range(epochs):
     print("[{} / {}]".format(epoch + 1, epochs))
