@@ -62,7 +62,7 @@ def calculate_scores(folder: str):
 
         final = time.time()
 
-        print("Total time taken is {}".format(start - final))
+        print("Total time taken is {}".format(final - start))
 
         # a dataframe of the scores only
         dataframe = pd.DataFrame()
