@@ -18,13 +18,13 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 train_dataset = DataSet(st.train_path, shuffle=True, augment=True)
 val_dataset = DataSet(st.val_path, shuffle=False, augment=False)
 
-train_dataloader = DataLoader(train_dataset, batch_size=32, drop_last=True)
-val_dataloader = DataLoader(val_dataset, batch_size=32)
+train_dataloader = DataLoader(train_dataset, batch_size=8, drop_last=True)
+val_dataloader = DataLoader(val_dataset, batch_size=8)
 
 model = SiameseNetwork(backbone="resnet18")
 model.to(device)
 
-optimizer = torch.optim.Adam(model.parameters(), lr=1E-4, weight_decay=1E-6)
+optimizer = torch.optim.Adam(model.parameters(), lr=1E-3, weight_decay=1E-5)
 criterion = torch.nn.BCELoss()
 
 writer = SummaryWriter(os.path.join(out_path, "summary"))
