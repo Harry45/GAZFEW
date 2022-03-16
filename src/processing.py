@@ -259,27 +259,29 @@ def images_train_validate_test(tag_names: list) -> None:
             move_data(subset, item)
 
 
-def copy_single_image(image: str, target_folder: str):
+def copy_test_images(images: list, target_folder: str):
     """Copy a single image to the target folder
 
     Args:
-        image_path (str): the name of the object (png_loc, that is, Jxxx/image)
+        images (list): a list with the names of the object (png_loc, that is, Jxxx/image)
         target_folder (str): the folder where we want to test the image
     """
+
     # we also want the details of the galaxy
     dr5_desc = hp.read_parquet(st.data_dir, 'descriptions/decals_5_votes')
 
-    desc = dr5_desc[dr5_desc['png_loc'] == image]
+    for image in images:
+        desc = dr5_desc[dr5_desc['png_loc'] == image]
 
-    # save the description of the galaxy
-    obj = os.path.split(image)[-1][:-4]
-    hp.save_pickle(desc, 'test-images', obj)
+        # save the description of the galaxy
+        obj = os.path.split(image)[-1][:-4]
+        hp.save_pickle(desc, 'test-images', obj)
 
-    # copy image
-    full_path = os.path.join(st.decals, image)
+        # copy image
+        full_path = os.path.join(st.decals, image)
 
-    if not os.path.exists:
-        raise FileNotFoundError(f'{full_path} does not exist')
+        if not os.path.exists:
+            raise FileNotFoundError(f'{full_path} does not exist')
 
-    cmd = f'cp {full_path} {target_folder}'
-    os.system(cmd)
+        cmd = f'cp {full_path} {target_folder}'
+        os.system(cmd)
