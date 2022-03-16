@@ -171,12 +171,12 @@ def split_data(tag_names: list, val_size: float = 0.20, test_size: float = 0.20,
     Returns:
         dict: A dictionary consisting of the training and validation data.
     """
-    
-    # compute the training size 
-    train_size = 1.0 - val_size - test_size 
-    
+
+    # compute the training size
+    train_size = 1.0 - val_size - test_size
+
     assert train_size > 0, "The validation and/or test size is too large."
-    
+
     d = {}
 
     for item in tag_names:
@@ -184,14 +184,14 @@ def split_data(tag_names: list, val_size: float = 0.20, test_size: float = 0.20,
         # load the csv file
         tag_file = hp.read_parquet(st.data_dir, 'descriptions/subset_' + item)
 
-        # split the data into train and test        
+        # split the data into train and test
         dummy, test = sm.train_test_split(tag_file, test_size=test_size)
-        
-        # the validation size needs to be updated based on the first split 
+
+        # the validation size needs to be updated based on the first split
         val_new = val_size * tag_file.shape[0] / dummy.shape[0]
-        
-        # then we generate the training and validation set 
-        train, validate = sm.train_test_split(dummy,test_size=val_new)
+
+        # then we generate the training and validation set
+        train, validate = sm.train_test_split(dummy, test_size=val_new)
 
         # reset the index (not required, but just in case)
         test.reset_index(drop=True, inplace=True)
@@ -210,24 +210,24 @@ def split_data(tag_names: list, val_size: float = 0.20, test_size: float = 0.20,
 
 
 def move_data(subset: str, object_type: str) -> None:
-    """Move data to the right folder. 
+    """Move data to the right folder.
 
     Args:
-        subset (str) : validate or train or test 
+        subset (str) : validate or train or test
         object_type (str): name of the object, for example, 'spiral', we want to move
     """
-    
+
     assert subset in ['validate', 'test', 'train'], "Typical group in ML: validate, train, test"
-    
+
     # the Machine Learning set (validate, train, test)
-    ml_set = hp.load_csv(st.data_dir + '/ml/'+ subset, object_type)
-       
-    # number of objects we have 
+    ml_set = hp.load_csv(st.data_dir + '/ml/' + subset, object_type)
+
+    # number of objects we have
     nobject = ml_set.shape[0]
-    
+
     # folder where we want to store the images
     folder = st.data_dir + '/' + 'ml' + '/' + subset + '_images' + '/' + object_type + '/'
-    
+
     # create the different folders if they do not exist (remove them if they exist already)
     if os.path.exists(folder):
 
@@ -236,7 +236,7 @@ def move_data(subset: str, object_type: str) -> None:
 
     # then create a new one
     os.makedirs(folder)
-    
+
     # copy the data from images/item to categories/train/item
     for j in range(nobject):
 
@@ -246,7 +246,7 @@ def move_data(subset: str, object_type: str) -> None:
             cmd = f'cp {file} {folder}'
             os.system(cmd)
 
-                
+
 def images_train_validate_test(tag_names: list) -> None:
     """Read the csv file for a particular tag and copy the images in their respective folders
 

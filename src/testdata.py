@@ -7,13 +7,8 @@ Dataloader (test phase) for the Galaxy Zoo data using PyTorch.
 # Project: One/Few-Shot Learning for Galaxy Zoo
 """
 
-import os
-import glob
-import time
 from typing import Tuple
-
 import torch
-import numpy as np
 from torchvision import transforms
 from torch.utils.data import IterableDataset
 from PIL import Image
@@ -23,59 +18,63 @@ import settings as st
 
 
 class TestData(IterableDataset):
+    """Data loader for the test images.
 
-	def __init__(self, gz_path: str, test_path: str):
+    Args:
+        gz_path (str): the path to the full galaxy zoo dataset
+        test_path (str): the location of the test image
+    """
 
-		# store the path
-		self.gz_path = gz_path
+    def __init__(self, gz_path: str, test_path: str):
 
-		# transformations
-		trans = st.transformation
+        # store the path
+        self.gz_path = gz_path
 
-		# create the transform
-		self.transform = transforms.Compose(trans)
+        # transformations
+        trans = st.transformation
 
-		# the locations of the galaxy images 
-		# self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))[0:500]
-		self.gz_images = gz_path[0:500]
+        # create the transform
+        self.transform = transforms.Compose(trans)
 
-		# number of images 
-		self.nimages = len(self.gz_images)
+        # the locations of the galaxy images
+        # self.gz_images = glob.glob(os.path.join(self.gz_path, "*/*.png"))[0:500]
+        self.gz_images = gz_path[0:500]
 
-		# the full path of the test image
-		self.test_path = test_path
+        # number of images
+        self.nimages = len(self.gz_images)
 
-	def __iter__(self):
+        # the full path of the test image
+        self.test_path = test_path
 
-		for idx in range(self.nimages):
+    def __iter__(self) -> Tuple[torch.Tensor, torch.Tensor]:
+        """Generates a pair of images.
 
-			# get the image paths for the pair
-			image_path1 = self.test_path
-			image_path2 = self.gz_images[idx]
+        Yields:
+            Iterator[Tuple[torch.Tensor, torch.Tensor]]: the two images to be
+            compared
+        """
 
-			# load the two images
-			image1 = Image.open(image_path1).convert("RGB")
-			image2 = Image.open(image_path2).convert("RGB")
+        for idx in range(self.nimages):
 
-			# transform the images
-			if self.transform:
-				image1 = self.transform(image1).float()
-				image2 = self.transform(image2).float()
+            # get the image paths for the pair
+            image_path1 = self.test_path
+            image_path2 = self.gz_images[idx]
 
-			yield (image1, image2)
+            # load the two images
+            image1 = Image.open(image_path1).convert("RGB")
+            image2 = Image.open(image_path2).convert("RGB")
 
+            # transform the images
+            if self.transform:
+                image1 = self.transform(image1).float()
+                image2 = self.transform(image2).float()
 
-	def __len__(self):
-		"""Return the length of the dataset.
+            yield (image1, image2)
 
-		Returns:
-			int: The length of the dataset.
-		"""
-		return len(self.gz_images)
+    def __len__(self):
+        """Return the length of the dataset.
 
-
-
-
-
-
-
+        Returns:
+            int: The length of the dataset.
+        """
+        return len(self.gz_images)
