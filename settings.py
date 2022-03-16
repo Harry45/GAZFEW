@@ -61,5 +61,5 @@ condition_elliptical = {'smooth-or-featured_smooth_fraction': 0.75,
 
 condition_strong_bar = {'bar_strong': 20, 'bar_strong_fraction': 0.75}
 condition_merger = {'merging_merger': 20, 'merging_merger_fraction': 0.75}
-condition_bulge_round = { 'edge-on-bulge_rounded': 20, 'edge-on-bulge_rounded_fraction' : 0.75}
+condition_bulge_round = {'edge-on-bulge_rounded': 20, 'edge-on-bulge_rounded_fraction': 0.75}
 condition_major_disturbance = {'merging_major-disturbance': 20, 'merging_major-disturbance_fraction': 0.6}

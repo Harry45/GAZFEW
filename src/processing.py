@@ -257,3 +257,21 @@ def images_train_validate_test(tag_names: list) -> None:
     for item in tag_names:
         for subset in ['validate', 'train', 'test']:
             move_data(subset, item)
+
+
+def copy_single_image(image: str, target_folder: str):
+    """Copy a single image to the target folder
+
+    Args:
+        image_path (str): the name of the object (png_loc, that is, Jxxx/image)
+        target_folder (str): the folder where we want to test the image
+    """
+
+    full_path = os.path.join(st.decals, image)
+
+    if not os.path.exists:
+        raise FileNotFoundError(f'{full_path} does not exist')
+
+    else:
+        cmd = f'cp {full_path} {target_folder}'
+        os.system(cmd)
