@@ -24,7 +24,7 @@ def calculate_scores(folder: str):
         folder (str): path to the folder
     """
 
-    path = os.path.join(folder, '*.png')
+    path = os.path.join(os.getcwd(), folder, '*.png')
     imgs = glob.glob(path)
 
     # choice of device
