@@ -46,12 +46,11 @@ class TestData(IterableDataset):
         # the full path of the test image
         self.test_path = test_path
 
-    def __iter__(self) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __iter__(self):
         """Generates a pair of images.
 
         Yields:
-            Iterator[Tuple[torch.Tensor, torch.Tensor]]: the two images to be
-            compared
+            Two images to be compared
         """
 
         for idx in range(self.nimages):
