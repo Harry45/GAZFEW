@@ -56,8 +56,8 @@ os.makedirs(out_path, exist_ok=True)
 # Set device to CUDA if a CUDA device is available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-train_dataset = DataSet(st.train_path, shuffle=True, augment=True)
-val_dataset = DataSet(st.val_path, shuffle=False, augment=False)
+train_dataset = DataSet(st.train_path, shuffle=True, augment=True, cont =True)
+val_dataset = DataSet(st.val_path, shuffle=False, augment=False, cont=True)
 
 train_dataloader = DataLoader(train_dataset, batch_size=32, drop_last=True)
 val_dataloader = DataLoader(val_dataset, batch_size=32)
