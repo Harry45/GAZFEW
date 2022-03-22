@@ -28,12 +28,13 @@ def evaluate_pair(output1,output2,target,threshold):
     for i in range(len(cond)):
         if target[i]:
             pos_sum+=1
-            if not cond[i]:
-                neg_acc+=1
-        if not target[i]:
-            neg_sum+=1
             if cond[i]:
                 pos_acc+=1
+
+        else:
+            neg_sum+=1
+            if not cond[i]:
+                neg_acc+=1
 
     return pos_acc,pos_sum,neg_acc,neg_sum
 
