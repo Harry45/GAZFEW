@@ -31,13 +31,16 @@ class DataSet(IterableDataset):
         augment (bool, optional): Option to augment the data. Defaults to False.
     """
 
-    def __init__(self, path: str, shuffle: bool = False, augment: bool = False):
+    def __init__(self, path: str, shuffle: bool = False, augment: bool = False, cont: bool = True):
 
         # shuffle the pairs
         self.shuffle = shuffle
 
         # choose if we want to augment the data
         self.augment = augment
+
+        # if we want to use contrastive loss 
+        self.cont = cont 
 
         # store the path
         self.path = path
@@ -145,7 +148,11 @@ class DataSet(IterableDataset):
                 image1 = self.transform(image1).float()
                 image2 = self.transform(image2).float()
 
-            yield (image1, image2), torch.FloatTensor([class1 != class2]), (class1, class2)
+            if self.cont:
+                yield (image1, image2), torch.FloatTensor([class1 != class2]), (class1, class2)
+
+            else: 
+                yield (image1, image2), torch.FloatTensor([class1 == class2]), (class1, class2)
 
     def __len__(self):
         """Return the length of the dataset.

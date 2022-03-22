@@ -11,22 +11,28 @@ from src.netcon import SiameseNetwork
 from src.loss import ContrastiveLoss
 
 def evaluate_pair(output1,output2,target,threshold):
+
+    # if target = 0, similar objects
+    # if target = 1, dissimilar objects
+
     euclidean_distance = F.pairwise_distance(output1, output2)
 
-    # print(euclidean_distance)
+
     # if target == 1:
     #     return euclidean_distance > threshold
     # else:
     #     return euclidean_distance <= threshold
+
     cond = euclidean_distance<threshold
     # print(cond)
+
     pos_sum = 0
     neg_sum = 0
     pos_acc = 0
     neg_acc = 0
 
     for i in range(len(cond)):
-        if target[i]:
+        if not target[i]:
             pos_sum+=1
             if cond[i]:
                 pos_acc+=1
@@ -39,8 +45,8 @@ def evaluate_pair(output1,output2,target,threshold):
     return pos_acc,pos_sum,neg_acc,neg_sum
 
 
-epochs = 5
-margin = 5.0
+epochs = 1
+margin = 10.0
 threshold = 1E-4 
 
 out_path = './output/'
