@@ -7,6 +7,7 @@ from torch.utils.tensorboard import SummaryWriter
 import settings as st
 from src.dataset import DataSet
 from src.netcon import SiameseNetwork
+from src.loss import ContrastiveLoss
 
 def evaluate_pair(output1,output2,target,threshold):
     euclidean_distance = F.pairwise_distance(output1, output2)
@@ -57,7 +58,7 @@ model = SiameseNetwork(backbone="resnet18")
 model.to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=1E-4, weight_decay=1E-5)
-criterion = torch.nn.BCELoss()
+criterion = ContrastiveLoss(2.0)
 
 writer = SummaryWriter(os.path.join(out_path, "summary"))
 
@@ -74,7 +75,7 @@ for epoch in range(epochs):
 
         output1, output2 = model(img1, img2)
         print(output1.shape)
-        
+
         loss = criterion(output1, output2, y)
         train_epoch_loss += loss.item()
         loss.backward()
