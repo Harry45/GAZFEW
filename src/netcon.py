@@ -38,7 +38,7 @@ class SiameseNetwork(nn.Module):
             nn.Sigmoid(),
             nn.Dropout(p=0.5),
 
-            nn.Linear(256, 1)
+            nn.Linear(256, 128)
         )
 
     def forward_once(self, img):
