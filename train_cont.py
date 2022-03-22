@@ -65,7 +65,6 @@ train_loss = []
 valid_loss = []
 
 for epoch in range(epochs):
-    print("[{} / {}]".format(epoch + 1, epochs))
     model.train()
     train_epoch_loss = 0.0
 
@@ -73,6 +72,8 @@ for epoch in range(epochs):
     for (img1, img2), y, (class1, class2) in train_dataloader:
         img1, img2, y = map(lambda x: x.to(device), [img1, img2, y])
 
+        print(model(img1, img2))
+        
         output1, output2 = model(img1, img2)
         loss = criterion(output1, output2, y)
         train_epoch_loss += loss.item()
