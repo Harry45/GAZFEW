@@ -37,6 +37,7 @@ def evaluate_pair(output1,output2,target,threshold):
 
 epochs = 5
 margin = 2.0
+threshold = 0.3 
 
 out_path = './output/'
 
@@ -58,7 +59,7 @@ model = SiameseNetwork(backbone="resnet18")
 model.to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=1E-4, weight_decay=1E-5)
-criterion = ContrastiveLoss(2.0)
+criterion = ContrastiveLoss(margin)
 
 writer = SummaryWriter(os.path.join(out_path, "summary"))
 
