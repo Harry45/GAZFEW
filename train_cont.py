@@ -37,7 +37,7 @@ def evaluate_pair(output1,output2,target,threshold):
 
 
 epochs = 1
-margin = 2.0
+margin = 5.0
 threshold = 0.3 
 
 out_path = './output/'
