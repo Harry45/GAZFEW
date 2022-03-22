@@ -73,8 +73,6 @@ for epoch in range(epochs):
 
     # Training Loop Start
     for (img1, img2), y, (class1, class2) in train_dataloader:
-
-        print(y, class1, class2)
         
         img1, img2, y = map(lambda x: x.to(device), [img1, img2, y])
 
