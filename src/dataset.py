@@ -145,7 +145,7 @@ class DataSet(IterableDataset):
                 image1 = self.transform(image1).float()
                 image2 = self.transform(image2).float()
 
-            yield (image1, image2), torch.FloatTensor([class1 == class2]), (class1, class2)
+            yield (image1, image2), torch.FloatTensor([class1 != class2]), (class1, class2)
 
     def __len__(self):
         """Return the length of the dataset.
