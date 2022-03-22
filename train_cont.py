@@ -2,6 +2,7 @@ import os
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+import torch.nn.functional as F
 
 # our scripts and functions
 import settings as st
