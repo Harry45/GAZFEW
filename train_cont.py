@@ -13,7 +13,7 @@ from src.loss import ContrastiveLoss
 def evaluate_pair(output1,output2,target,threshold):
     euclidean_distance = F.pairwise_distance(output1, output2)
 
-    print(euclidean_distance)
+    # print(euclidean_distance)
     # if target == 1:
     #     return euclidean_distance > threshold
     # else:
@@ -27,20 +27,20 @@ def evaluate_pair(output1,output2,target,threshold):
 
     for i in range(len(cond)):
         if target[i]:
-            neg_sum+=1
+            pos_sum+=1
             if not cond[i]:
                 neg_acc+=1
         if not target[i]:
-            pos_sum+=1
+            neg_sum+=1
             if cond[i]:
                 pos_acc+=1
 
     return pos_acc,pos_sum,neg_acc,neg_sum
 
 
-epochs = 2
+epochs = 5
 margin = 5.0
-threshold = 0.3 
+threshold = 1E-3 
 
 out_path = './output/'
 
@@ -100,7 +100,7 @@ for epoch in range(epochs):
     for (img1, img2), y, (class1, class2) in val_dataloader:
         img1, img2, y = map(lambda x: x.to(device), [img1, img2, y])
 
-        print(y)
+        # print(y)
 
         output1, output2 = model(img1, img2)
         loss = criterion(output1, output2, y)
