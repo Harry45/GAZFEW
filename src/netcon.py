@@ -43,7 +43,7 @@ class SiameseNetwork(nn.Module):
 
     def forward_once(self, img):
 
-        output = self.backbone(img); print(output.shape)
+        output = self.backbone(img)
         output = self.cls_head(output)
 
         return output 

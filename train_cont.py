@@ -74,12 +74,11 @@ for epoch in range(epochs):
         img1, img2, y = map(lambda x: x.to(device), [img1, img2, y])
 
         output1, output2 = model(img1, img2)
-        print(output1.shape)
 
         loss = criterion(output1, output2, y)
         train_epoch_loss += loss.item()
         loss.backward()
-        optim.step()
+        optimizer.step()
     
     train_epoch_loss /= ntrain
     train_loss.append(train_epoch_loss)
