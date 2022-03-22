@@ -17,7 +17,6 @@ def evaluate_pair(output1,output2,target,threshold):
 
     euclidean_distance = F.pairwise_distance(output1, output2)
 
-
     # if target == 1:
     #     return euclidean_distance > threshold
     # else:
@@ -32,6 +31,8 @@ def evaluate_pair(output1,output2,target,threshold):
     neg_acc = 0
 
     for i in range(len(cond)):
+        print(target[i], euclidean_distance[i])
+        
         if not target[i]:
             pos_sum+=1
             if cond[i]:
@@ -45,7 +46,7 @@ def evaluate_pair(output1,output2,target,threshold):
     return pos_acc,pos_sum,neg_acc,neg_sum
 
 
-epochs = 1
+epochs = 5
 margin = 10.0
 threshold = 1E-4 
 
