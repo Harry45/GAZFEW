@@ -36,7 +36,7 @@ def evaluate_pair(output1,output2,target,threshold):
     return pos_acc,pos_sum,neg_acc,neg_sum
 
 
-epochs = 5
+epochs = 1
 margin = 2.0
 threshold = 0.3 
 
@@ -50,8 +50,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 train_dataset = DataSet(st.train_path, shuffle=True, augment=True)
 val_dataset = DataSet(st.val_path, shuffle=False, augment=False)
 
-train_dataloader = DataLoader(train_dataset, batch_size=8, drop_last=True)
-val_dataloader = DataLoader(val_dataset, batch_size=8)
+train_dataloader = DataLoader(train_dataset, batch_size=32, drop_last=True)
+val_dataloader = DataLoader(val_dataset, batch_size=32)
 
 ntrain = len(train_dataloader)
 nvalid = len(val_dataloader)
