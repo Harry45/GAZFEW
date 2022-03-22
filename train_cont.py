@@ -12,6 +12,8 @@ from src.loss import ContrastiveLoss
 
 def evaluate_pair(output1,output2,target,threshold):
     euclidean_distance = F.pairwise_distance(output1, output2)
+
+    print(euclidean_distance)
     # if target == 1:
     #     return euclidean_distance > threshold
     # else:
