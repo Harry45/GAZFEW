@@ -11,7 +11,7 @@ from torchvision import transforms
 # 2) Generate the description files for spirals and ellipticals based on selection cuts.
 # 3) Pick a subset of this data, for example, 2000 out of 8000.
 # 4) Copy the data (per category) from Mike's folder to the new folder ($DATA/data/images/spiral/object.jpg).
-# 5) Split the data (csv/dataframe) into training and validation sets.
+# 5) Split the data (csv/dataframe) into training, testing and validation sets.
 # 6) Copy the training and validation images into the ml/ folder.
 
 # DECaLS (the data is in Mike's directory on ARC cluster)
@@ -55,11 +55,14 @@ val_path = data_dir + '/ml/validate_images/'
 test_path = data_dir + '/ml/generalise/'
 
 # ----------------------------------------------------------------------------------
-condition_spiral = {'has-spiral-arms_yes_fraction': 0.75, 'has-spiral-arms_yes': 20}
-condition_elliptical = {'smooth-or-featured_smooth_fraction': 0.75,
-                        'smooth-or-featured_smooth': 20, 'merging_none_fraction': 0.75}
+FRAC = 0.75
+N_VOTE = 10
 
-condition_strong_bar = {'bar_strong': 20, 'bar_strong_fraction': 0.75}
-condition_merger = {'merging_merger': 20, 'merging_merger_fraction': 0.75}
-condition_bulge_round = {'edge-on-bulge_rounded': 20, 'edge-on-bulge_rounded_fraction': 0.75}
-condition_major_disturbance = {'merging_major-disturbance': 20, 'merging_major-disturbance_fraction': 0.6}
+condition_spiral = {'has-spiral-arms_yes_fraction': FRAC, 'has-spiral-arms_yes': N_VOTE}
+condition_elliptical = {'smooth-or-featured_smooth_fraction': FRAC,
+                        'smooth-or-featured_smooth': N_VOTE, 'merging_none_fraction': FRAC}
+
+condition_strong_bar = {'bar_strong': N_VOTE, 'bar_strong_fraction': FRAC}
+condition_merger = {'merging_merger': N_VOTE, 'merging_merger_fraction': FRAC}
+condition_bulge_round = {'edge-on-bulge_rounded': N_VOTE, 'edge-on-bulge_rounded_fraction': FRAC}
+condition_major_disturbance = {'merging_major-disturbance': N_VOTE, 'merging_major-disturbance_fraction': 0.6}
