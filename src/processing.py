@@ -15,6 +15,46 @@ import utils.helpers as hp
 import settings as st
 
 
+def generate_labels(fname: str, save: bool = False) -> pd.DataFrame:
+    """Process the vote fraction and turn them into labels.
+
+    Args:
+        fname (str): Name of the file which we want to process
+        save (bool, optional): Option to save the file. Defaults to False.
+
+    Raises:
+        FileNotFoundError: Raises an error if file is not found.
+
+    Returns:
+        pd.DataFrame: A pandas dataframe consisting of the labels.
+    """
+
+    desc = hp.read_parquet(st.data_dir, 'descriptions/' + fname)
+
+    # number of columns in the dataframe
+    ncols = desc.shape[1]
+
+    # the vote fraction
+    vote_fraction = desc[desc.columns[['fraction' in desc.columns[i] for i in range(ncols)]]]
+
+    # generate the labels
+    labels = vote_fraction.copy()
+    labels[vote_fraction >= 0.5] = 1
+    labels[vote_fraction < 0.5] = 0
+
+    # we fill the NaN with -100 (we will be using cross-entropy later where we
+    # can specify ignore_index = -100)
+    labels.fillna(-100, inplace=True)
+
+    # keep the image names and locations in the file which contains the labels
+    labels = pd.concat([desc[['iauname', 'png_loc']], labels], axis=1)
+
+    if save:
+        hp.save_parquet(labels, st.data_dir + '/descriptions', 'labels')
+
+    return labels
+
+
 def correct_location(csv: str, save: bool = False, **kwargs) -> pd.DataFrame:
     """Rename the columns containing the image location to the right one.
 
